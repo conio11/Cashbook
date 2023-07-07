@@ -45,7 +45,9 @@ public class LoginController extends HttpServlet {
 		String memberId = request.getParameter("memberId");
 		String memberPw = request.getParameter("memberPw");
 		
-		Member member = new Member(memberId, memberPw, null, null);
+		// Member member = new Member(memberId, memberPw, null, null);
+		
+		Member member = new Member();
 		
 		MemberDao memberDao = new MemberDao();
 		Member loginMember = memberDao.selectMemberById(member);

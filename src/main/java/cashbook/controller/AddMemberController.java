@@ -46,8 +46,10 @@ public class AddMemberController extends HttpServlet {
 		Member member = new Member();
 		String memberId = request.getParameter("memberId");
 		String memberPw = request.getParameter("memberPw");
+		String memberEmail = request.getParameter("memberEmail");
 		member.setMemberId(memberId);
 		member.setMemberPw(memberPw);
+		member.setMemberEmail(memberEmail);
 		
 		// 회원가입 DAO 호출
 		MemberDao memberDao = new MemberDao(); 

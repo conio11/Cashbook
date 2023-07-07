@@ -92,7 +92,7 @@
 	                      <label for="memberId" class="form-label">ID</label>
 	                      <div class="input-group has-validation">
 	                       <!--  <span class="input-group-text" id="inputGroupPrepend">@</span> -->
-	                        <input type="text" name="memberId" class="form-control" id="memberId" required>
+	                        <input type="text" name="memberId" class="form-control" id="memberId" value="${memberId}" required>
 	                        <div class="invalid-feedback">ID를 입력하세요.</div>
 	                      </div>
 	                    </div>

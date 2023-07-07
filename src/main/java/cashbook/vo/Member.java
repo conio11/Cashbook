@@ -11,7 +11,7 @@ public class Member {
 		super();
 	}
 	
-	public Member(String memberId, String memberPw, String createdate, String updatedate) {
+	public Member(String memberId, String memberPw, String memberEmail, String createdate, String updatedate) {
 		super();
 		this.memberId = memberId;
 		this.memberPw = memberPw;
