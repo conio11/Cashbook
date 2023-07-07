@@ -36,10 +36,10 @@
 					<td class="text-bg-success text-center">아이디</td>
 					<td>${member.memberId}</td>
 				</tr>
-	<%-- 			<tr>
-					<td>memberPw</td>
-					<td>${member.memberPw}</td>
-				</tr> --%>
+				<tr>
+					<td class="text-bg-success text-center">이메일</td>
+					<td>${member.memberEmail}</td>
+				</tr> 
 				<tr>
 					<td class="text-bg-success text-center">가입일자</td>
 					<td>${member.createdate}</td>
