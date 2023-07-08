@@ -1,35 +1,60 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
   <title>addMember</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+		<script>
+			$(document).ready(function() {
+				const urlParams = new URL(location.href).searchParams;
+				const msg = urlParams.get("msg");
+				if (msg != null) {
+					alert(msg);
+				}
+				
+	/* 			$("#addMemberBtn").click(function() {
+					if ($("#memberId").val() == "") {
+						alert("아이디를 입력해주세요.");
+						$("#memberId").focus();
+					} else if ($("#memberPw").val() == "") {
+						alert("비밀번호를 입력해주세요.");
+						$("#memberPw").focus();
+					} else if ($("#memberEmail").val() == "") {
+						alert("비밀번호를 입력해주세요.");
+						$("#memberEmail").focus();		
+					} else {
+						$("#addMember").submit();
+					}
+				}); */
+			});
+		</script>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link href="${pageContext.request.contextPath}/assets/img/favicon.png" rel="icon">
+  <link href="${pageContext.request.contextPath}/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
-  <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
-  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-  <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+  <link href="${pageContext.request.contextPath}/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="${pageContext.request.contextPath}/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="${pageContext.request.contextPath}/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="${pageContext.request.contextPath}/assets/vendor/quill/quill.snow.css" rel="stylesheet">
+  <link href="${pageContext.request.contextPath}/assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+  <link href="${pageContext.request.contextPath}/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="${pageContext.request.contextPath}/assets/vendor/simple-datatables/style.css" rel="stylesheet">
 
   <!-- Template Main CSS File -->
-  <link href="assets/css/style.css" rel="stylesheet">
+  <link href="${pageContext.request.contextPath}/assets/css/style.css" rel="stylesheet">
 
   <!-- =======================================================
   * Template Name: NiceAdmin
@@ -66,16 +91,16 @@
                     <p class="text-center small">ID, 이메일, 패스워드를 입력해주세요.</p>
                   </div>
 
-                  <form class="row g-3 needs-validation" novalidate>
+                  <form method="post" action="${pageContext.request.contextPath}/off/addMember" id="addMember" class="row g-3 needs-validation" novalidate>
                     <div class="col-12">
-                      <label for="yourName" class="form-label">ID</label>
-                      <input type="text" name="name" class="form-control" id="yourName" required>
+                      <label for="memberId" class="form-label">ID</label>
+                      <input type="text" name="memberId" class="form-control" id="memberId" required>
                       <div class="invalid-feedback">ID를 입력하세요.</div>
                     </div>
 
                     <div class="col-12">
-                      <label for="yourEmail" class="form-label">Email</label>
-                      <input type="email" name="email" class="form-control" id="yourEmail" required>
+                      <label for="memberEmail" class="form-label">Email</label>
+                      <input type="email" name="memberEmail" class="form-control" id="memberEmail" required>
                       <div class="invalid-feedback">이메일을 입력하세요.</div>
                     </div>
 
@@ -89,8 +114,8 @@
                     </div> -->
 
                     <div class="col-12">
-                      <label for="yourPassword" class="form-label">Password</label>
-                      <input type="password" name="password" class="form-control" id="yourPassword" required>
+                      <label for="password" class="form-label">Password</label>
+                      <input type="password" name="memberPw" class="form-control" id="memberPw" required>
                       <div class="invalid-feedback">비밀번호를 입력하세요.</div>
                     </div>
 
@@ -102,10 +127,10 @@
                       </div>
                     </div>
                     <div class="col-12">
-                      <button class="btn btn-primary w-100" type="submit">회원가입</button>
+                     <button class="btn btn-primary w-100" type="submit">회원가입</button>
                     </div>
                     <div class="col-12">
-                      <p class="small mb-0">회원이신가요? <a href="${pageContext.request.contextPath}/login">로그인</a></p>
+                      <p class="small mb-0">회원이신가요? <a href="${pageContext.request.contextPath}/off/login">로그인</a></p>
                     </div>
                   </form>
 
@@ -132,17 +157,17 @@
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
-  <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/chart.js/chart.umd.js"></script>
-  <script src="assets/vendor/echarts/echarts.min.js"></script>
-  <script src="assets/vendor/quill/quill.min.js"></script>
-  <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
-  <script src="assets/vendor/tinymce/tinymce.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="${pageContext.request.contextPath}/assets/vendor/apexcharts/apexcharts.min.js"></script>
+  <script src="${pageContext.request.contextPath}/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="${pageContext.request.contextPath}/assets/vendor/chart.js/chart.umd.js"></script>
+  <script src="${pageContext.request.contextPath}/assets/vendor/echarts/echarts.min.js"></script>
+  <script src="${pageContext.request.contextPath}/assets/vendor/quill/quill.min.js"></script>
+  <script src="${pageContext.request.contextPath}/assets/vendor/simple-datatables/simple-datatables.js"></script>
+  <script src="${pageContext.request.contextPath}/assets/vendor/tinymce/tinymce.min.js"></script>
+  <script src="${pageContext.request.contextPath}/assets/vendor/php-email-form/validate.js"></script>
 
   <!-- Template Main JS File -->
-  <script src="assets/js/main.js"></script>
+  <script src="${pageContext.request.contextPath}/assets/js/main.js"></script>
 
 </body>
 

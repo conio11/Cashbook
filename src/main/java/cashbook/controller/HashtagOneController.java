@@ -16,11 +16,12 @@ import cashbook.model.HashtagDao;
 import cashbook.vo.Member;
 
 
-@WebServlet("/hashtagOne")
+@WebServlet("/on/hashtagOne")
 public class HashtagOneController extends HttpServlet {
 	// 캘린더에서 해시태그를 선택했을 때 해당 해시태그의 내용, 날짜, 가격, 카테고리 가져오기
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		/*
 		// session 유효성 검사
 		HttpSession session = request.getSession();
 		String msg = "";
@@ -32,6 +33,10 @@ public class HashtagOneController extends HttpServlet {
 		Member loginMember = (Member) session.getAttribute("loginMember");
 		String memberId = loginMember.getMemberId();
 		System.out.println(memberId + " <-- memberId(HashtagOneGet)");
+		*/
+		
+		String loginMemberId = (String) request.getAttribute("loginMemberId");
+		
 		
 		String word = request.getParameter("word");
 		System.out.println(word + " <-- word(HashtagOneGet)");
@@ -55,7 +60,7 @@ public class HashtagOneController extends HttpServlet {
 		System.out.println(beginRow + " <-- beginRow(HashtagOneGet)");
 		
 		// 전체 행 수
-		int totalRow = hashtagDao.selectHashtagOneCnt(memberId, word);
+		int totalRow = hashtagDao.selectHashtagOneCnt(loginMemberId, word);
 		
 		
 		int lastPage = totalRow / rowPerPage;
@@ -122,9 +127,9 @@ public class HashtagOneController extends HttpServlet {
 		
 		*/
 		
-		List<Map<String, Object>> list = hashtagDao.selectHashtagOne(memberId, word, beginRow, rowPerPage);
+		List<Map<String, Object>> list = hashtagDao.selectHashtagOne(loginMemberId, word, beginRow, rowPerPage);
 		
-		request.setAttribute("memberId", memberId);
+		request.setAttribute("memberId", loginMemberId);
 		request.setAttribute("word", word);
 		request.setAttribute("list", list);
 		

@@ -13,10 +13,12 @@ import javax.servlet.http.HttpSession;
 import cashbook.model.CashbookDao;
 import cashbook.vo.Member;
 
-@WebServlet("/removeCashbook")
+@WebServlet("/on/removeCashbook")
 public class RemoveCashbookController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		/*
+		
 		// session 유효성 검사
 		HttpSession session = request.getSession();
 		String msg = "";
@@ -28,6 +30,8 @@ public class RemoveCashbookController extends HttpServlet {
 		Member loginMember = (Member) session.getAttribute("loginMember");
 		String memberId = loginMember.getMemberId();
 		System.out.println(memberId + " <-- memberId(removeCashbookGet)");
+		*/
+		
 		
 		CashbookDao cashbookDao = new CashbookDao();
 		
@@ -45,14 +49,15 @@ public class RemoveCashbookController extends HttpServlet {
 		int row = cashbookDao.removeCashbook(cashbookNo);
 		System.out.println(row + " <-- row(RemoveCashbookPost)");
 		
+		String msg = "";
 		if (row == 1) {
 			System.out.println("가계부 삭제 성공");
 			msg = URLEncoder.encode("삭제되었습니다.", "UTF-8"); 
-			response.sendRedirect(request.getContextPath() + "/cashbookListOne?targetYear=" + targetYear + "&targetMonth=" + targetMonth + "&targetDate=" + targetDate + "&msg=" + msg);
+			response.sendRedirect(request.getContextPath() + "/on/cashbookListOne?targetYear=" + targetYear + "&targetMonth=" + targetMonth + "&targetDate=" + targetDate + "&msg=" + msg);
 		} else if (row == 0) {
 			System.out.println("가계부 삭제 실패");
 			msg = URLEncoder.encode("삭제에 실패했습니다.", "UTF-8");
-			response.sendRedirect(request.getContextPath() + "/cashbookListOne?targetYear=" + targetYear + "&targetMonth=" + targetMonth + "&targetDate=" + targetDate + "&msg=" + msg);
+			response.sendRedirect(request.getContextPath() + "/on/cashbookListOne?targetYear=" + targetYear + "&targetMonth=" + targetMonth + "&targetDate=" + targetDate + "&msg=" + msg);
 		} else {
 			System.out.println("remove cashbook error!");
 		}

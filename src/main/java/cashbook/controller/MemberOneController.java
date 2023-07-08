@@ -13,10 +13,11 @@ import javax.servlet.http.HttpSession;
 import cashbook.model.MemberDao;
 import cashbook.vo.Member;
 
-@WebServlet("/memberOne")
+@WebServlet("/on/memberOne")
 public class MemberOneController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		/*
 		// session 유효성 검사 
 		HttpSession session = request.getSession();
 		String msg = "";
@@ -27,9 +28,13 @@ public class MemberOneController extends HttpServlet {
 		}
 		Member loginMember = (Member) session.getAttribute("loginMember");
 		
+		*/
+		
+		String loginMemberId = (String) request.getAttribute("loginMemberId");
+		
 		// 모델값 구하기(dao 내 메소드 호출)
 		MemberDao memberDao = new MemberDao();
-		Member member = memberDao.selectMemberOne(loginMember.getMemberId());
+		Member member = memberDao.selectMemberOne(loginMemberId);
 		// member 출력하는 (포워딩 대상) memberOne.jsp에도 공유되어야 함
 		// request가 공유됨 -> request 안에 넣어 공유
 		request.setAttribute("member", member); // request.getAttribute(member)로 가져오기

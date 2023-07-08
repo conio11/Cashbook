@@ -52,14 +52,14 @@
 	</head>
 	<body>
 		<div class="container mt-3">
-			<a href="${pageContext.request.contextPath}/calendar" class="btn btn-success">홈 화면으로</a>
-			<a href="${pageContext.request.contextPath}/memberOne" class="btn btn-success">이전</a>
+			<a href="${pageContext.request.contextPath}/on/calendar" class="btn btn-success">홈 화면으로</a>
+			<a href="${pageContext.request.contextPath}/on/memberOne" class="btn btn-success">이전</a>
 			<br>
 			<div class="text-center">
 				<h1>회원정보수정</h1>
 			</div>
 			<br>
-			<form method="post" action="${pageContext.request.contextPath}/modifyMember" id="modifyMember">
+			<form method="post" action="${pageContext.request.contextPath}/on/modifyMember" id="modifyMember">
 				<table class="table table-bordered">
 					<tr>
 						<td class="text-bg-success text-center">현재 비밀번호 입력</td>

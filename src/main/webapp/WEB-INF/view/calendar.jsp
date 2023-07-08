@@ -49,14 +49,14 @@
 	 	-->
 		<!-- 자바 코드 (제어문) : JSTL  -->
 		<div class="container mt-3">
-		<a href="${pageContext.request.contextPath}/logout" class="btn btn-success">로그아웃</a>
-		<a href="${pageContext.request.contextPath}/memberOne" class="btn btn-success">회원정보</a>
+		<a href="${pageContext.request.contextPath}/on/logout" class="btn btn-success">로그아웃</a>
+		<a href="${pageContext.request.contextPath}/on/memberOne" class="btn btn-success">회원정보</a>
 		<div class="text-center">
 			<h1>${targetYear}년 ${targetMonth + 1}월</h1>
 		</div>
 		<div>
-			<a href="${pageContext.request.contextPath}/calendar?targetYear=${targetYear}&targetMonth=${targetMonth - 1}" class="btn btn-outline-success">이전 달</a>
-			<a href="${pageContext.request.contextPath}/calendar?targetYear=${targetYear}&targetMonth=${targetMonth + 1}" class="float-end btn btn-outline-success">다음 달</a>
+			<a href="${pageContext.request.contextPath}/on/calendar?targetYear=${targetYear}&targetMonth=${targetMonth - 1}" class="btn btn-outline-success">이전 달</a>
+			<a href="${pageContext.request.contextPath}/on/calendar?targetYear=${targetYear}&targetMonth=${targetMonth + 1}" class="float-end btn btn-outline-success">다음 달</a>
 		</div>
 		<br>
 		
@@ -64,7 +64,7 @@
 			<h3>이달의 해시태그</h3>
 			<div>
 				<c:forEach var="m" items="${htList}">
-					<a href="${pageContext.request.contextPath}/hashtagOne?word=${m.word}" class="btn btn-sm">${m.word}(${m.cnt})</a>
+					<a href="${pageContext.request.contextPath}/on/hashtagOne?word=${m.word}" class="btn btn-sm">${m.word}(${m.cnt})</a>
 				</c:forEach>
 			</div>
 		</div>
@@ -96,7 +96,7 @@
 					<c:if test="${!(d < 1 || d > lastDate)}">
 						<td>
 							<div>
-								<a href="${pageContext.request.contextPath}/cashbookListOne?targetYear=${targetYear}&targetMonth=${targetMonth}&targetDate=${d}" class="btn">${d}</a>
+								<a href="${pageContext.request.contextPath}/on/cashbookListOne?targetYear=${targetYear}&targetMonth=${targetMonth}&targetDate=${d}" class="btn">${d}</a>
 							</div>
 							<c:forEach var="c" items="${list}">
 								<c:if test="${d == fn:substring(c.cashbookDate, 8, 10)}">

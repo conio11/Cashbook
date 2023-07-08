@@ -18,11 +18,12 @@ import cashbook.vo.Cashbook;
 import cashbook.vo.Hashtag;
 import cashbook.vo.Member;
 
-@WebServlet("/addCashbook")
+@WebServlet("/on/addCashbook")
 public class AddCashbookController extends HttpServlet {
 	// 입력폼
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		/*
 		// session 유효성 검사
 		HttpSession session = request.getSession();
 		String msg = "";
@@ -31,9 +32,14 @@ public class AddCashbookController extends HttpServlet {
 			response.sendRedirect(request.getContextPath() + "/login?msg=" + msg);
 			return;
 		}
+		
+		HttpSession session = request.getSession();
 		Member loginMember = (Member) session.getAttribute("loginMember");
 		String memberId = loginMember.getMemberId();
 		System.out.println(memberId + " <-- memberId(AddCashbookGet)");
+		*/
+		
+
 		
 		// request 매개값 - 날짜
 		int targetYear = Integer.parseInt(request.getParameter("targetYear"));
@@ -55,18 +61,19 @@ public class AddCashbookController extends HttpServlet {
 	// 입력 액션
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
+		// request.setCharacterEncoding("UTF-8");
 		// session 유효성 검사
-		HttpSession session = request.getSession();
-		String msg = "";
-		if (session.getAttribute("loginMember") == null) {
-			msg = URLEncoder.encode("로그인 후 이용 가능합니다.", "UTF-8"); 
-			response.sendRedirect(request.getContextPath() + "/login?msg=" + msg);
-			return;
-		}
-		Member loginMember = (Member) session.getAttribute("loginMember");
-		String memberId = loginMember.getMemberId();
-		System.out.println(memberId + " <-- memberId(AddCashbookPost)");
+		/*
+		 * HttpSession session = request.getSession(); String msg = ""; if
+		 * (session.getAttribute("loginMember") == null) { msg =
+		 * URLEncoder.encode("로그인 후 이용 가능합니다.", "UTF-8");
+		 * response.sendRedirect(request.getContextPath() + "/login?msg=" + msg);
+		 * return; } Member loginMember = (Member) session.getAttribute("loginMember");
+		 * String memberId = loginMember.getMemberId(); System.out.println(memberId +
+		 * " <-- memberId(AddCashbookPost)");
+		 */
+		
+		String memberId = (String) request.getAttribute("loginMemberId");
 		
 		Cashbook cashbook = new Cashbook();
 		CashbookDao cashbookDao = new CashbookDao();
@@ -118,7 +125,7 @@ public class AddCashbookController extends HttpServlet {
 		
 		if (cashbookNo == 0) { // 0 반환 시 입력 실패
 			System.out.println("입력 실패");
-			response.sendRedirect(request.getContextPath() + "/addCashbook");
+			response.sendRedirect(request.getContextPath() + "/on/addCashbook");
 			return;
 		}
 		
@@ -183,6 +190,6 @@ public class AddCashbookController extends HttpServlet {
 		 */
 		
 		// redirect -> cashbookListOneListController
-		response.sendRedirect(request.getContextPath() + "/cashbookListOne?targetYear=" + targetYear + "&targetMonth=" + (targetMonth - 1) + "&targetDate=" + targetDate);
+		response.sendRedirect(request.getContextPath() + "/on/cashbookListOne?targetYear=" + targetYear + "&targetMonth=" + (targetMonth - 1) + "&targetDate=" + targetDate);
 	}
 }

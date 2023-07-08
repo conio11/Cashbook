@@ -15,11 +15,12 @@ import cashbook.model.CashbookDao;
 import cashbook.vo.Cashbook;
 import cashbook.vo.Member;
 
-@WebServlet("/cashbookListOne")
+@WebServlet("/on/cashbookListOne")
 public class CashbookListOneController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// session 유효성 검사
+		/*
 		String msg = "";
 		HttpSession session = request.getSession();
 		if (session.getAttribute("loginMember") == null) {
@@ -27,15 +28,21 @@ public class CashbookListOneController extends HttpServlet {
 			response.sendRedirect(request.getContextPath() + "/login?msg=" + msg);
 			return;
 		}
+		
+		
+		HttpSession session = request.getSession();
 		Member loginMember = (Member) session.getAttribute("loginMember");
 		String loginMemberId = loginMember.getMemberId();
 		System.out.println(loginMemberId + " <-- loginMemberId(CashbookListOneGet)");
+		*/
+		
+		String loginMemberId = (String) request.getAttribute("loginMemberId");
 
 		// targetYear, targetMonth, targetDate 중 하나라도 넘어오지 않았을 경우 calendar 컨트롤러로 리다이렉트
 		if (request.getParameter("targetYear") == null
 		|| request.getParameter("targetMonth") == null
 		|| request.getParameter("targetDate") == null) {
-			response.sendRedirect(request.getContextPath() + "/calendar");
+			response.sendRedirect(request.getContextPath() + "/on/calendar");
 			return; 
 		}
 		

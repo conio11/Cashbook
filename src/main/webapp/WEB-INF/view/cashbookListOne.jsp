@@ -23,7 +23,7 @@
 	</head>
 	<body>
 		<div class="container mt-3">
-		<a href="${pageContext.request.contextPath}/calendar" class="btn btn-success">홈 화면으로</a>
+		<a href="${pageContext.request.contextPath}/on/calendar" class="btn btn-success">홈 화면으로</a>
 		<br>
 		<div class="text-center">
 			<h1>${targetYear}년 ${targetMonth + 1}월 ${targetDate}일 가계부</h1>
@@ -46,9 +46,9 @@
 				<td>${c.memo}</td>	
 				<td>${fn:substring(c.createdate, 0, 10)}</td>
 				<!-- URL에 # 입력 시 오류 발생 가능 -->
-				<td><a href="${pageContext.request.contextPath}/modifyCashbook?cashbookNo=${c.cashbookNo}&targetYear=${targetYear}&targetMonth=${targetMonth}&targetDate=${targetDate}" class="btn btn-outline-success">수정</a></td>
+				<td><a href="${pageContext.request.contextPath}/on/modifyCashbook?cashbookNo=${c.cashbookNo}&targetYear=${targetYear}&targetMonth=${targetMonth}&targetDate=${targetDate}" class="btn btn-outline-success">수정</a></td>
 				<td>
-					<a href="${pageContext.request.contextPath}/removeCashbook?cashbookNo=${c.cashbookNo}&targetYear=${targetYear}&targetMonth=${targetMonth}&targetDate=${targetDate}" class="btn btn-outline-success">
+					<a href="${pageContext.request.contextPath}/on/removeCashbook?cashbookNo=${c.cashbookNo}&targetYear=${targetYear}&targetMonth=${targetMonth}&targetDate=${targetDate}" class="btn btn-outline-success">
 						삭제
 					</a>
 				</td>			
@@ -56,7 +56,7 @@
 		</c:forEach>
 		</table>
 		
-		<a href="${pageContext.request.contextPath}/addCashbook?targetYear=${targetYear}&targetMonth=${targetMonth}&targetDate=${targetDate}" class="btn btn-outline-success">새로 입력</a>
+		<a href="${pageContext.request.contextPath}/on/addCashbook?targetYear=${targetYear}&targetMonth=${targetMonth}&targetDate=${targetDate}" class="btn btn-outline-success">새로 입력</a>
 		</div>
 	</body>
 </html>

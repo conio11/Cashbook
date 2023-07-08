@@ -32,9 +32,9 @@
 		</script>
 	</head>
 	<body>
-		<a href="${pageContext.request.contextPath}/login">로그인</a>
+		<a href="${pageContext.request.contextPath}/off/login">로그인</a>
 		<h1>회원가입</h1>
-		<form method="post" action="${pageContext.request.contextPath}/addMember" id="addMember">
+		<form method="post" action="${pageContext.request.contextPath}/off/addMember" id="addMember">
 			<table border="1">
 				<tr>
 					<td>아이디</td>

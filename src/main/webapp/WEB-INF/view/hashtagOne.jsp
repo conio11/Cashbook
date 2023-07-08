@@ -22,7 +22,7 @@
 	</head>
 	<body>
 		<div class="container mt-3">
-		<a href="${pageContext.request.contextPath}/calendar" class="btn btn-success">홈 화면으로</a>
+		<a href="${pageContext.request.contextPath}/on/calendar" class="btn btn-success">홈 화면으로</a>
 		<br>
 		<div class="text-center">	
 			<h1>#${word}</h1>
@@ -49,7 +49,7 @@
 		<ul class="pagination justify-content-center">
 		<!-- minPage가 1보다 클 때만 [이전] 탭 출력  -->
 		<c:if test="${minPage > 1}">
-			<li class="page-item"><a href="${pageContext.request.contextPath}/hashtagOne?word=${word}&currentPage=${minPage - pagePerPage}" class="page-link">이전</a></li>
+			<li class="page-item"><a href="${pageContext.request.contextPath}/on/hashtagOne?word=${word}&currentPage=${minPage - pagePerPage}" class="page-link">이전</a></li>
 		</c:if>
 		
 		<!-- [이전], [다음] 탭 내에서 반복 -->
@@ -59,14 +59,14 @@
 					<li class="page-item active"><a class="page-link"><span>${i}</span></a></li>
 				</c:when>
 				 <c:otherwise> <!-- 현재 페이지가 아닌 번호는 링크로 표시 (클릭 시 해당 번호 페이지로 이동) -->
-      				  <li class="page-item"><a href="${pageContext.request.contextPath}/hashtagOne?word=${word}&currentPage=${i}" class="page-link">${i}</a></li>
+      				  <li class="page-item"><a href="${pageContext.request.contextPath}/on/hashtagOne?word=${word}&currentPage=${i}" class="page-link">${i}</a></li>
     			</c:otherwise>
 			</c:choose>
 		</c:forEach>
 		
 		<!-- [이전] [다음] 탭 사이 가장 큰 숫자가 lastPage보다 작을 때만 [다음] 탭 출력  -->
 		<c:if test="${maxPage < lastPage}">
-			<li class="page-item"><a href="${pageContext.request.contextPath}/hashtagOne?word=${word}&currentPage=${minPage + pagePerPage}" class="page-link">다음</a></li>
+			<li class="page-item"><a href="${pageContext.request.contextPath}/on/hashtagOne?word=${word}&currentPage=${minPage + pagePerPage}" class="page-link">다음</a></li>
 		</c:if>
 		</ul>
 		</div>

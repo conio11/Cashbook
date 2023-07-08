@@ -19,10 +19,11 @@ import cashbook.vo.Cashbook;
 import cashbook.vo.Member;
 
 
-@WebServlet("/calendar")
+@WebServlet("/on/calendar")
 public class CalendarController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		/*
 		// session 유효성 검사
 		HttpSession session = request.getSession();
 		String msg = "";
@@ -31,9 +32,16 @@ public class CalendarController extends HttpServlet {
 			response.sendRedirect(request.getContextPath() + "/login?msg=" + msg);
 			return;
 		}
+		
+		
+		HttpSession session = request.getSession();
 		Member loginMember = (Member) session.getAttribute("loginMember");
 		String memberId = loginMember.getMemberId();
 		System.out.println(memberId + " <-- memberId(CalendarGet)");
+		
+		*/
+		
+		String loginMemberId = (String) request.getAttribute("loginMemberId");
 		
 		// view에 넘겨줄 달력 정보 (모델값)
 		// Calendar c = Calendar.getInstance(); // 오늘 날짜 정보
@@ -94,10 +102,10 @@ public class CalendarController extends HttpServlet {
 		
 		
 		// 모델 호출 (DAO 타겟 월의 수입/지출 데이터)
-		List<Cashbook> list = new CashbookDao().selectCashBookListByMonth(memberId, targetYear, targetMonth + 1); // targetMonth: 0 ~ 11이므로 + 1
+		List<Cashbook> list = new CashbookDao().selectCashBookListByMonth(loginMemberId, targetYear, targetMonth + 1); // targetMonth: 0 ~ 11이므로 + 1
 		
 		// 해시태그 <이름, 개수> 쌍 리스트 가져오기
-		List<Map<String, Object>> htList = new HashtagDao().selectWordCntByMonth(memberId, targetYear, targetMonth + 1);
+		List<Map<String, Object>> htList = new HashtagDao().selectWordCntByMonth(loginMemberId, targetYear, targetMonth + 1);
 		System.out.println(htList.size() + " <-- htList.size()(calendarGet)");preDay.set(Calendar.MONTH, targetMonth - 1);
 		
 		// 달력을 출력하는 view

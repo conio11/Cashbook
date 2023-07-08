@@ -10,12 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet("/logout")
+@WebServlet("/on/logout")
 public class LogoutController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		session.invalidate();
 		String msg = URLEncoder.encode("로그아웃 되었습니다.", "UTF-8"); 
-		response.sendRedirect(request.getContextPath() + "/login?msg=" + msg);
+		response.sendRedirect(request.getContextPath() + "/off/login?msg=" + msg);
 	}
 }

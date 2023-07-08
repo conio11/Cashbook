@@ -14,10 +14,11 @@ import cashbook.model.CashbookDao;
 import cashbook.vo.Cashbook;
 import cashbook.vo.Member;
 
-@WebServlet("/modifyCashbook")
+@WebServlet("/on/modifyCashbook")
 public class ModifyCashbookController extends HttpServlet {
 	// 가계부 수정 jsp 파일로 이동
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		/*
 		// session 유효성 검사
 		HttpSession session = request.getSession();
 		String msg = "";
@@ -28,7 +29,10 @@ public class ModifyCashbookController extends HttpServlet {
 		}
 		Member loginMember = (Member) session.getAttribute("loginMember");
 		String memberId = loginMember.getMemberId();
-		System.out.println(memberId + " <-- memberId(modifyCashbookGet)");
+		System.out.println(memberId + " <-- memberId(modifyCashbookGet)")
+		*/
+		
+		String loginMemberId = (String) request.getAttribute("loginMemberId");
 		
 		CashbookDao cashbookDao = new CashbookDao();
 		
@@ -58,6 +62,8 @@ public class ModifyCashbookController extends HttpServlet {
 
 	// 가계부 수정 액션
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		/*
+		
 		// post 방식 인코딩 설정
 		request.setCharacterEncoding("UTF-8");
 		
@@ -72,6 +78,10 @@ public class ModifyCashbookController extends HttpServlet {
 		Member loginMember = (Member) session.getAttribute("loginMember");
 		String memberId = loginMember.getMemberId();
 		System.out.println(memberId + " <-- memberId(modifyCashbookGet)");
+		
+		*/
+		
+		String loginMember = (String) request.getAttribute("loginMember");
 		
 		int targetYear = Integer.parseInt(request.getParameter("targetYear"));
 		int targetMonth = Integer.parseInt(request.getParameter("targetMonth"));
@@ -94,15 +104,16 @@ public class ModifyCashbookController extends HttpServlet {
 		int row = cashbookDao.modifyCashbook(category, price, cashbookNo);
 		System.out.println(row + " <-- row(modifyCashbookPost)");
 		
+		String msg = "";
 		if (row == 1) {
 			System.out.println("가계부 수정 성공");
 			msg = URLEncoder.encode("수정이 완료되었습니다.", "UTF-8"); 
-			response.sendRedirect(request.getContextPath() + "/cashbookListOne?targetYear=" + targetYear + "&targetMonth=" + targetMonth + "&targetDate=" + targetDate + "&msg=" + msg);
+			response.sendRedirect(request.getContextPath() + "/on/cashbookListOne?targetYear=" + targetYear + "&targetMonth=" + targetMonth + "&targetDate=" + targetDate + "&msg=" + msg);
 			
 		} else if (row == 0) {
 			System.out.println("가계부 수정 실패");
 			msg = URLEncoder.encode("수정에 실패했습니다. 다시 시도해 주세요.", "UTF-8"); 
-			response.sendRedirect(request.getContextPath() + "/cashbookListOne?targetYear=" + targetYear + "&targetMonth=" + targetMonth + "&targetDate=" + targetDate + "&msg=" + msg);
+			response.sendRedirect(request.getContextPath() + "/on/cashbookListOne?targetYear=" + targetYear + "&targetMonth=" + targetMonth + "&targetDate=" + targetDate + "&msg=" + msg);
 		} else {
 			System.out.println("modify cashbook error!");
 		}

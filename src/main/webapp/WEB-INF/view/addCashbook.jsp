@@ -34,13 +34,13 @@
 	</head>
 	<body>
 		<div class="container mt-3">
-			<a href="${pageContext.request.contextPath}/calendar" class="btn btn-success">홈 화면으로</a>
-			<a href="${pageContext.request.contextPath}/cashbookListOne?targetYear=${targetYear}&targetMonth=${targetMonth}&targetDate=${targetDate}" class="btn btn-success">이전</a>
+			<a href="${pageContext.request.contextPath}/on/calendar" class="btn btn-success">홈 화면으로</a>
+			<a href="${pageContext.request.contextPath}/on/cashbookListOne?targetYear=${targetYear}&targetMonth=${targetMonth}&targetDate=${targetDate}" class="btn btn-success">이전</a>
 			<br>
 			<div class="text-center">
 				<h1>가계부 입력</h1>
 			</div>
-			<form method="post" action="${pageContext.request.contextPath}/addCashbook" id="addCashbook">
+			<form method="post" action="${pageContext.request.contextPath}/on/addCashbook" id="addCashbook">
 				<input type="hidden" name="targetYear" value="${targetYear}">
 				<input type="hidden" name="targetMonth" value="${targetMonth}">
 				<input type="hidden" name="targetDate" value="${targetDate}">

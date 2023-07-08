@@ -14,16 +14,18 @@ import javax.servlet.http.HttpSession;
 import cashbook.model.*;
 import cashbook.vo.*;
 
-@WebServlet("/login")
+@WebServlet("/off/login")
 public class LoginController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
+		/*
 		// session 유효성 검사
 		HttpSession session = request.getSession();
 		if (session.getAttribute("loginMember") != null) {
 			response.sendRedirect(request.getContextPath() + "/calendar");
 			return;
 		}
+		*/
 		
 		// 쿠키에 저장된 아이디가 있다면 request 속성에 저장
 		Cookie[] cookies = request.getCookies();
@@ -44,10 +46,11 @@ public class LoginController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String memberId = request.getParameter("memberId");
 		String memberPw = request.getParameter("memberPw");
-		
+		System.out.println(memberId);
+		System.out.println(memberPw);
 		// Member member = new Member(memberId, memberPw, null, null);
 		
-		Member member = new Member();
+		Member member = new Member(memberId, memberPw, null, null, null);
 		
 		MemberDao memberDao = new MemberDao();
 		Member loginMember = memberDao.selectMemberById(member);
@@ -73,6 +76,6 @@ public class LoginController extends HttpServlet {
 		}
 
 		msg = URLEncoder.encode(memberId + "님, 환영합니다.", "UTF-8"); 
-		response.sendRedirect(request.getContextPath() + "/calendar?msg=" + msg);
+		response.sendRedirect(request.getContextPath() + "/on/calendar?msg=" + msg);
 	}
 }

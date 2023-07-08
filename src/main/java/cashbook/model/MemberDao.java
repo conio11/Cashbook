@@ -69,7 +69,7 @@ public class MemberDao {
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String sql = "SELECT member_id memberId, member_pw memberPw, createdate, updatedate FROM member WHERE member_id = ?";
+		String sql = "SELECT member_id memberId, member_pw memberPw, member_email memberEmail, createdate, updatedate FROM member WHERE member_id = ?";
 		
 		try {
 			Class.forName("org.mariadb.jdbc.Driver");
@@ -81,6 +81,7 @@ public class MemberDao {
 				member = new Member();
 				member.setMemberId(memberId);
 				member.setMemberPw(rs.getString("memberPw"));
+				member.setMemberEmail(rs.getString("memberEmail"));
 				member.setCreatedate(rs.getString("createdate"));
 				member.setUpdatedate(rs.getString("updatedate"));
 			}

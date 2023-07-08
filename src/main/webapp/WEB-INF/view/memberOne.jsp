@@ -23,7 +23,7 @@
 			 <div class="row">
     		 <!-- <div class="col-sm-8"> -->
     		 <div class="row-cols-auto">
-			 <a href="${pageContext.request.contextPath}/calendar" class="btn btn-success">홈 화면으로</a>
+			 <a href="${pageContext.request.contextPath}/on/calendar" class="btn btn-success">홈 화면으로</a>
 			 <br><br>
 			 <div class="text-center">
 				<h1>회원 상세정보</h1>
@@ -49,8 +49,8 @@
 					<td>${member.updatedate}</td>
 				</tr>
 			</table>
-			<a href="${pageContext.request.contextPath}/modifyMember" class="btn btn-outline-success">회원정보수정</a>
-			<a href="${pageContext.request.contextPath}/removeMember" class="btn btn-outline-success">회원탈퇴</a>
+			<a href="${pageContext.request.contextPath}/on/modifyMember" class="btn btn-outline-success">회원정보수정</a>
+			<a href="${pageContext.request.contextPath}/on/removeMember" class="btn btn-outline-success">회원탈퇴</a>
 			<!-- </div> -->
 				</div>
 				</div>

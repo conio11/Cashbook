@@ -12,12 +12,13 @@ import cashbook.model.MemberDao;
 import cashbook.vo.Member;
 import java.net.*;
 
-@WebServlet("/addMember")
+@WebServlet("/off/addMember")
 public class AddMemberController extends HttpServlet {
 	// addMember.jsp (회원가입 폼)으로 이동
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("doGet");
+		/*
 		// session 유효성 검사 
 		HttpSession session = request.getSession();
 		// 로그인 상태이면 cashbook.jsp로 이동
@@ -25,6 +26,7 @@ public class AddMemberController extends HttpServlet {
 			response.sendRedirect(request.getContextPath() + "/cashbook");
 			return;
 		}
+		*/
 	
 		// jsp 페이지로 포워드(디스패치)
 		request.getRequestDispatcher("/WEB-INF/view/addMember.jsp").forward(request, response);
