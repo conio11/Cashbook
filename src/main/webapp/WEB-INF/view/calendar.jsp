@@ -49,8 +49,11 @@
 	 	-->
 		<!-- 자바 코드 (제어문) : JSTL  -->
 		<div class="container mt-3">
-		<a href="${pageContext.request.contextPath}/on/logout" class="btn btn-success">로그아웃</a>
-		<a href="${pageContext.request.contextPath}/on/memberOne" class="btn btn-success">회원정보</a>
+		<div class="btn-group">
+			<a href="${pageContext.request.contextPath}/on/logout" class="btn btn-success">로그아웃</a>
+			<a href="${pageContext.request.contextPath}/on/memberOne" class="btn btn-success">회원정보</a>
+			<a href="${pageContext.request.contextPath}/onOff/noticeList" class="btn btn-success">공지사항</a>
+		</div>
 		<div class="text-center">
 			<h1>${targetYear}년 ${targetMonth + 1}월</h1>
 		</div>
