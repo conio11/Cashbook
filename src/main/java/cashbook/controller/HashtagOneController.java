@@ -54,7 +54,7 @@ public class HashtagOneController extends HttpServlet {
 		// 페이지당 출력 행 수 
 		int rowPerPage = 10;
 		
-		// 시작 행 번호 -> 0, 5, 15, ....
+		// 시작 행 번호 -> 0, 10, 20, ...
 		// LIMIT(beginRow, rowPerPage)
 		int beginRow = (currentPage - 1) * rowPerPage;
 		System.out.println(beginRow + " <-- beginRow(HashtagOneGet)");
@@ -62,9 +62,9 @@ public class HashtagOneController extends HttpServlet {
 		// 전체 행 수
 		int totalRow = hashtagDao.selectHashtagOneCnt(loginMemberId, word);
 		
-		
+		// 마지막 페이지
 		int lastPage = totalRow / rowPerPage;
-		if (totalRow / rowPerPage != 0) {
+		if (totalRow % rowPerPage != 0) {
 			lastPage += 1;
 		}
 		System.out.println(totalRow + " <-- totalRow(HashtagOneGet)");
