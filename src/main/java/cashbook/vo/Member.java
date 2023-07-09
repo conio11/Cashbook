@@ -3,6 +3,7 @@ package cashbook.vo;
 public class Member {
 	private String memberId;
 	private String memberPw;
+	private String memberName;
 	private String memberEmail;
 	private String createdate;
 	private String updatedate;
@@ -11,19 +12,14 @@ public class Member {
 		super();
 	}
 	
-	public Member(String memberId, String memberPw, String memberEmail, String createdate, String updatedate) {
+	public Member(String memberId, String memberPw, String memberName, String memberEmail, String createdate, String updatedate) {
 		super();
 		this.memberId = memberId;
 		this.memberPw = memberPw;
+		this.memberName = memberName;
 		this.memberEmail = memberEmail;
 		this.createdate = createdate;
 		this.updatedate = updatedate;
-	}
-
-	@Override
-	public String toString() {
-		return "Member [memberId=" + memberId + ", memberPw=" + memberPw + ", memberEmail=" + memberEmail + ", createdate=" + createdate
-				+ ", updatedate=" + updatedate + "]";
 	}
 
 	public String getMemberId() {
@@ -37,6 +33,12 @@ public class Member {
 	}
 	public void setMemberPw(String memberPw) {
 		this.memberPw = memberPw;
+	}
+	public String getMemberName() {
+		return memberName;
+	}
+	public void setMemberName(String memberName) {
+		this.memberName = memberName;
 	}
 	public String getMemberEmail() {
 		return memberEmail;
@@ -55,5 +57,11 @@ public class Member {
 	}
 	public void setUpdatedate(String updatedate) {
 		this.updatedate = updatedate;
+	}
+	
+	@Override
+	public String toString() {
+		return "Member [memberId=" + memberId + ", memberPw=" + memberPw + ", memberName=" + memberName + ", memberEmail=" + memberEmail + ", createdate=" + createdate
+				+ ", updatedate=" + updatedate + "]";
 	}
 }
