@@ -29,7 +29,7 @@ public class LoginOnFilter extends HttpFilter implements Filter {
 		Member loginMember = (Member) session.getAttribute("loginMember");
 		String loginMemberId = loginMember != null ? loginMember.getMemberId() : null;
 		req.setAttribute("loginMemberId", loginMemberId);
-		System.out.println(loginMemberId + " <-- loginMemberId");
+		System.out.println(loginMemberId + " <-- loginMemberId(LoginOnFilter)");
 		
 		//req.setAttribute("loginMemberId", loginMemberId);
 		

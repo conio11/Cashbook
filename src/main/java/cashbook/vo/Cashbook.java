@@ -12,8 +12,8 @@ public class Cashbook {
 	
 	public Cashbook() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
+	
 	public Cashbook(int cashbookNo, String memberId, String category, String cashbookDate, int price, String memo, String updatedate,
 			String createdate) {
 		super();
