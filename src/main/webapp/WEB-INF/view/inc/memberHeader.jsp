@@ -5,7 +5,7 @@
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="${pageContext.request.contextPath}/on/cashbook" class="logo d-flex align-items-center">
+      <a href="${pageContext.request.contextPath}/on/calendar" class="logo d-flex align-items-center">
         <img src="${pageContext.request.contextPath}/assets/img/logo.png" alt="">
         <span class="d-none d-lg-block">Cashbook</span>
       </a>
@@ -41,19 +41,6 @@
 
         </li><!-- End Notification Nav -->
 
-        <li class="nav-item dropdown">
-
-          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-            <i class="bi bi-chat-left-text"></i>
-            <span class="badge bg-success badge-number">3</span>
-          </a><!-- End Messages Icon -->
-
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
-           
-          
-          </ul><!-- End Messages Dropdown Items -->
-
-        </li><!-- End Messages Nav -->
 
         <li class="nav-item dropdown pe-3">
 
