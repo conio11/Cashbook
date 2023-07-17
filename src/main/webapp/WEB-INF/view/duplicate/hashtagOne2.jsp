@@ -30,10 +30,10 @@
 		<br>
 		<table class="table table-bordered">
 			<tr class="text-bg-success text-center">
-				<td>날짜</td>
-				<td>카테고리</td>
-				<td>금액</td>
-				<td>메모</td>
+				<th>날짜</th>
+				<th>카테고리</th>
+				<th>금액</th>
+				<th>메모</th>
 			</tr>
 			<c:forEach var="h" items="${list}">
 			<tr class="text-center">

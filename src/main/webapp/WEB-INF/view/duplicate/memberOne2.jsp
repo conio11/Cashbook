@@ -37,6 +37,10 @@
 					<td>${member.memberId}</td>
 				</tr>
 				<tr>
+					<td class="text-bg-success text-center">이름</td>
+					<td>${member.memberName}</td>
+				</tr> 
+				<tr>
 					<td class="text-bg-success text-center">이메일</td>
 					<td>${member.memberEmail}</td>
 				</tr> 
