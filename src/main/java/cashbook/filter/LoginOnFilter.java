@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import cashbook.vo.Admin;
 import cashbook.vo.Member;
 
 
@@ -26,27 +27,46 @@ public class LoginOnFilter extends HttpFilter implements Filter {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpSession session = req.getSession();
 		
-		Member loginMember = (Member) session.getAttribute("loginMember");
+		
+		Object loginInfo = session.getAttribute("loginInfo");
+		
+		String msg = "";
+		if (loginInfo == null) {
+			msg = URLEncoder.encode("로그인 후 이용 가능합니다.", "UTF-8");
+			HttpServletResponse rep = (HttpServletResponse) response;
+			rep.sendRedirect(req.getContextPath() + "/off/login?msg=" + msg);
+			return;
+		}
+		
+		req.setAttribute("loginInfo", loginInfo);
+		
+		
+		
+		/*
+		
+		Member loginMember = (Member) session.getAttribute("loginInfo");
 		String loginMemberId = loginMember != null ? loginMember.getMemberId() : null;
 		req.setAttribute("loginMemberId", loginMemberId);
 		System.out.println(loginMemberId + " <-- loginMemberId(LoginOnFilter)");
 		
-		//req.setAttribute("loginMemberId", loginMemberId);
+	
 		
 		String msg = "";
-		if (session.getAttribute("loginMember") == null) {
+		if (session.getAttribute("loginInfo") == null) {
 			msg = URLEncoder.encode("로그인 후 이용 가능합니다.", "UTF-8");
 			HttpServletResponse rep = (HttpServletResponse) response;
 			rep.sendRedirect(req.getContextPath() + "/off/login?msg=" + msg);
 			return;
 			
 			
-			// HttpServletRequest req = (HttpServletRequest) request;
-			// HttpSession session = req.getSession();
-			// Member loginMember = (Member) session.getAttribute("loginMember");
-			// String loginMemberId = loginMember != null ? loginMember.getMemberId() : null;
-			//System.out.println(loginMemberId + " <-- loginMemberId");
 		}
+		*/
+
+		// HttpServletRequest req = (HttpServletRequest) request;
+		// HttpSession session = req.getSession();
+		// Member loginMember = (Member) session.getAttribute("loginMember");
+		// String loginMemberId = loginMember != null ? loginMember.getMemberId() : null;
+		//System.out.println(loginMemberId + " <-- loginMemberId");
 		
 		
 		chain.doFilter(request, response);
