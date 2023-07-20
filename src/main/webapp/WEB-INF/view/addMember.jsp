@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> <!-- JSP 컴파일 시 자바 코드로 변환되는 c: ... (제어 문법) 커스텀 태그  -->
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%> <!-- JSTL substring() 호출 -->
 <!DOCTYPE html>
 <html>
 
@@ -9,30 +11,86 @@
 
   <title>addMember</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
-		<script>
-			$(document).ready(function() {
-				const urlParams = new URL(location.href).searchParams;
-				const msg = urlParams.get("msg");
-				if (msg != null) {
-					alert(msg);
-				}
-				
-	/* 			$("#addMemberBtn").click(function() {
-					if ($("#memberId").val() == "") {
-						alert("아이디를 입력해주세요.");
-						$("#memberId").focus();
-					} else if ($("#memberPw").val() == "") {
-						alert("비밀번호를 입력해주세요.");
-						$("#memberPw").focus();
-					} else if ($("#memberEmail").val() == "") {
-						alert("비밀번호를 입력해주세요.");
-						$("#memberEmail").focus();		
-					} else {
-						$("#addMember").submit();
-					}
-				}); */
-			});
-		</script>
+  <script>
+  	$(document).ready(function() {
+		const urlParams = new URL(location.href).searchParams;
+		const msg = urlParams.get("msg");
+		if (msg != null) {
+			alert(msg);
+		}
+		
+		
+		$("#addMember").submit(function(event) {  
+			// 입력된 아이디 값 가져오기
+	    	let memberId = $("#memberId").val();
+
+	    	// "admin"으로 시작하는지 확인
+	     	if (memberId.startsWith("admin")) {
+	     		alert("사용할 수 없는 아이디입니다.");
+		        event.preventDefault(); // 폼 제출을 막음
+		        $("#memberId").val("");
+		        $("#memberId").focus();
+	     	}
+	    });
+	
+	     	 
+	    $("#checkId").click(function() {
+	    	const memberId = $("#memberId").val(); // memberId 입력 필드의 값 저장
+	     	if (memberId.startsWith("admin")) {
+	     		alert("사용할 수 없는 아이디입니다.");
+	    	  	$("#memberId").val("");
+	 	        $("#memberId").focus(); 
+	    	} else if (memberId.trim() === "") {
+	    		alert("아이디를 입력해주세요.");
+	    	} else {
+	    		$.ajax({
+	    			type: "POST", 
+	    			url: "${pageContext.request.contextPath}/off/checkId",
+	 	    		data: {memberId: memberId},
+	 	    		success: function(response) {
+	 	    			if (response == "y") {
+	 	    				alert("사용 가능한 아이디입니다.");
+	 	    			} else {
+	 	    				alert("사용 중인 아이디입니다.");
+	 	  	    	  		$("#memberId").val("");
+	 	  	 	        	$("#memberId").focus(); 
+	 	    			}
+ 	    		 	}
+ 	    		 });
+    		}
+   	 	});
+    });
+		
+		
+	/*
+		$("#addMemberBtn").click(function() {
+			// 입력된 아이디 값 가져오기
+            var memberId = $("#memberId").val();
+			
+            // "admin"으로 시작하는지 확인
+            if (memberId.startsWith("admin")) {
+                alert("사용할 수 없는 아이디입니다.");
+                
+            } else {
+                $("#addMember").submit();
+            }
+		});
+		
+		$("#addMemberBtn").click(function() {
+			if ($("#memberId").val() == "") {
+				alert("아이디를 입력해주세요.");
+				$("#memberId").focus();
+			} else if ($("#memberPw").val() == "") {
+				alert("비밀번호를 입력해주세요.");
+				$("#memberPw").focus();
+			} else if ($("#memberEmail").val() == "") {
+				alert("비밀번호를 입력해주세요.");
+				$("#memberEmail").focus();		
+			} else {
+				$("#addMember").submit();
+			}
+		}); */
+  </script>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -76,7 +134,7 @@
             <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
 
               <div class="d-flex justify-content-center py-4">
-                <a href="index.html" class="logo d-flex align-items-center w-auto">
+                <a href="${pageContext.request.contextPath}/off/home" class="logo d-flex align-items-center w-auto">
                   <img src="assets/img/logo.png" alt="">
                   <span class="d-none d-lg-block">Cashbook</span>
                 </a>
@@ -94,6 +152,7 @@
                   <form method="post" action="${pageContext.request.contextPath}/off/addMember" id="addMember" class="row g-3 needs-validation" novalidate>
                     <div class="col-12">
                       <label for="memberId" class="form-label">ID</label>
+                      <button type="button" class="float-end btn btn-outline-primary btn-sm" id="checkId">중복 확인</button><br>
                       <input type="text" name="memberId" class="form-control" id="memberId" required>
                       <div class="invalid-feedback">ID를 입력하세요.</div>
                     </div>
@@ -103,18 +162,15 @@
                       <input type="email" name="memberEmail" class="form-control" id="memberEmail" required>
                       <div class="invalid-feedback">이메일을 입력하세요.</div>
                     </div>
-
-    <!--                 <div class="col-12">
-                      <label for="yourUsername" class="form-label">Username</label>
-                      <div class="input-group has-validation">
-                        <span class="input-group-text" id="inputGroupPrepend">@</span>
-                        <input type="text" name="username" class="form-control" id="yourUsername" required>
-                        <div class="invalid-feedback">Please choose a username.</div>
-                      </div>
-                    </div> -->
+                    
+                     <div class="col-12">
+                      <label for="memberName" class="form-label">Username</label>
+                      <input type="text" name="memberName" class="form-control" id="memberName" required>
+                      <div class="invalid-feedback">이름을 입력하세요.</div>
+                    </div>
 
                     <div class="col-12">
-                      <label for="password" class="form-label">Password</label>
+                      <label for="memberPw" class="form-label">Password</label>
                       <input type="password" name="memberPw" class="form-control" id="memberPw" required>
                       <div class="invalid-feedback">비밀번호를 입력하세요.</div>
                     </div>
@@ -122,10 +178,31 @@
                     <div class="col-12">
                       <div class="form-check">
                         <input class="form-check-input" name="terms" type="checkbox" value="" id="acceptTerms" required>
-                        <label class="form-check-label" for="acceptTerms">이용약관에 동의합니다. <a href="#">상세 내용 확인</a></label>
+                        <label class="form-check-label" for="acceptTerms">전체 이용약관에 동의합니다. <a href="" data-bs-toggle="modal" data-bs-target="#disablebackdrop">상세 내용</a></label>
                         <div class="invalid-feedback">동의하지 않으면 회원가입이 불가합니다.</div>
                       </div>
                     </div>
+                    
+                   <!-- Disabled Backdrop Modal -->
+	              <div class="modal fade" id="disablebackdrop" tabindex="-1">
+	                <div class="modal-dialog">
+	                  <div class="modal-content">
+	                    <div class="modal-header">
+	                      <h5 class="modal-title">이용약관</h5>
+	                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	                    </div>
+	                    <div class="modal-body">
+	                    	- 본인은 만 14세 이상입니다. <br>
+	                    	- 개인정보 수집 및 이용 동의 <br>
+	                    	- 서비스 이용약관 동의 
+	                    </div>
+	                    <div class="modal-footer">
+	                      <button type="button" class="btn btn-primary" data-bs-dismiss="modal">확인</button>
+	                    </div>
+	                  </div>
+	                </div>
+	              </div><!-- End Disabled Backdrop Modal-->
+                    
                     <div class="col-12">
                      <button class="btn btn-primary w-100" type="submit">회원가입</button>
                     </div>
@@ -136,7 +213,6 @@
 
                 </div>
               </div>
-
               <div class="credits">
                 <!-- All the links in the footer should remain intact. -->
                 <!-- You can delete the links only if you purchased the pro version. -->
@@ -148,9 +224,7 @@
             </div>
           </div>
         </div>
-
       </section>
-
     </div>
   </main><!-- End #main -->
 
