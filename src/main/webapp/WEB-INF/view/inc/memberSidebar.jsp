@@ -23,9 +23,9 @@
       </li><!-- End Profile Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#">
+        <a class="nav-link collapsed" href="${pageContext.request.contextPath}/onOff/questionList">
           <i class="bi bi-question-circle"></i>
-          <span>문의 게시판</span>
+          <span>1:1 문의</span>
         </a>
       </li><!-- End F.A.Q Page Nav -->
 
@@ -38,9 +38,9 @@
       </li><!-- End Register Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#">
-          <i class="bi bi-file-earmark"></i>
-          <span>통계</span>
+        <a class="nav-link collapsed" href="${pageContext.request.contextPath}/on/myStatistics">
+          <i class="bi bi-file-earmark-bar-graph"></i>
+          <span>올해의 통계</span>
         </a>
       </li><!-- End Blank Page Nav -->
       
