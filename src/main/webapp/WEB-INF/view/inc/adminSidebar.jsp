@@ -9,26 +9,25 @@
       <li class="nav-item">
         <a class="nav-link collapsed" href="${pageContext.request.contextPath}/on/cashbook">
           <i class="bi bi-grid"></i>
-          <span>Dashboard</span>
+          <span>Home</span>
         </a>
       </li><!-- End Dashboard Nav -->
       
       <li class="nav-heading">Pages</li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="">
+        <a class="nav-link collapsed" href="${pageContext.request.contextPath}/on/memberList">
           <i class="bi bi-person"></i>
           <span>회원 DB</span>
         </a>
       </li><!-- End Profile Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="">
+        <a class="nav-link collapsed" href="${pageContext.request.contextPath}/onOff/questionList">
           <i class="bi bi-question-circle"></i>
           <span>문의 게시판</span>
         </a>
       </li><!-- End F.A.Q Page Nav -->
-
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="${pageContext.request.contextPath}/onOff/noticeList">
@@ -37,14 +36,7 @@
         </a>
       </li><!-- End Register Page Nav -->
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="">
-          <i class="bi bi-file-earmark"></i>
-          <span>통계</span>
-        </a>
-      </li><!-- End Blank Page Nav -->
-      
-           <li class="nav-item">
+     <li class="nav-item">
         <a class="nav-link collapsed" href="${pageContext.request.contextPath}/on/logout">
           <i class="bi bi-box-arrow-in-right"></i>
           <span>로그아웃</span>

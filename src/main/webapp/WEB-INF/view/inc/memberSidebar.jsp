@@ -9,12 +9,11 @@
       <li class="nav-item">
         <a class="nav-link collapsed" href="${pageContext.request.contextPath}/on/calendar">
           <i class="bi bi-grid"></i>
-          <span>Dashboard</span>
+          <span>Home</span>
         </a>
       </li><!-- End Dashboard Nav -->
-      
+     
       <li class="nav-heading">Pages</li>
-
       <li class="nav-item">
         <a class="nav-link collapsed" href="${pageContext.request.contextPath}/on/memberOne">
           <i class="bi bi-person"></i>
@@ -28,8 +27,6 @@
           <span>1:1 문의</span>
         </a>
       </li><!-- End F.A.Q Page Nav -->
-
-
       <li class="nav-item">
         <a class="nav-link collapsed" href="${pageContext.request.contextPath}/onOff/noticeList">
           <i class="bi bi-card-list"></i>
@@ -50,7 +47,5 @@
           <span>로그아웃</span>
         </a>
       </li><!-- End Login Page Nav -->
-
     </ul>
-
   </aside><!-- End Sidebar-->
