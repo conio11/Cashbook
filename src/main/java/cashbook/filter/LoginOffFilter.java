@@ -33,7 +33,7 @@ public class LoginOffFilter extends HttpFilter implements Filter {
 			
 			if (loginInfo instanceof Member) {
 				rep.sendRedirect(req.getContextPath() + "/on/calendar");
-				return;
+				// return;
 			} else {
 				rep.sendRedirect(req.getContextPath() + "/on/cashbook");
 			}

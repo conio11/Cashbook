@@ -30,8 +30,7 @@ public class LoginOnOffFilter extends HttpFilter implements Filter {
 		//if (loginInfo == null) {
 		//	System.out.println("로그인 X(LoginOnOffFilter)");
 		// }
-		
-		
+	
 		/*
 		
 		Member loginMember = (Member) session.getAttribute("loginMember");
