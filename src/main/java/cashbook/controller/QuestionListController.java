@@ -46,7 +46,7 @@ public class QuestionListController extends HttpServlet {
 			request.setAttribute("loginId", memberId);
 			request.setAttribute("list", list);
 			
-			request.getRequestDispatcher("/WEB-INF/view/questionMember.jsp").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/view/member/questionMember.jsp").forward(request, response);
 			return;
 		} else {
 			admin = (Admin) loginInfo;
@@ -110,7 +110,7 @@ public class QuestionListController extends HttpServlet {
 			request.setAttribute("minPage", minPage);
 			request.setAttribute("maxPage", maxPage);
 			
-			request.getRequestDispatcher("/WEB-INF/view/questionAdmin.jsp").forward(request, response);	
+			request.getRequestDispatcher("/WEB-INF/view/admin/questionAdmin.jsp").forward(request, response);	
 		}
 	}
 }

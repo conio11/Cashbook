@@ -12,46 +12,43 @@ import javax.servlet.http.HttpSession;
 
 import cashbook.model.AnswerDao;
 import cashbook.model.QuestionDao;
-import cashbook.vo.Admin;
 import cashbook.vo.Answer;
+import cashbook.vo.Member;
 import cashbook.vo.Question;
 
-@WebServlet("/on/questionOne")
-public class QuestionOneController extends HttpServlet {
+@WebServlet("/on/myQuestionOne")
+public class MyQuestionOneController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// session 인증 검사 코드
 		HttpSession session = request.getSession();
 		Object loginInfo = session.getAttribute("loginInfo");
 		
 		String msg = "";
-		Admin admin = null;
-		String adminId = null;
-		if (loginInfo instanceof Admin) {
-			admin = (Admin) loginInfo;
-			adminId = admin.getAdminId();
-			System.out.println(adminId + " <-- adminId(QuestionOneGet)");
-		} else { // 회원인 경우 회원 메인 페이지로 이동
+		Member member = null;
+		String memberId = null;
+		if (loginInfo instanceof Member) {
+			member = (Member) loginInfo;
+			memberId = member.getMemberId();
+			System.out.println(memberId + " <-- memberId(MyQuestionOneGet)");
+		} else { // 관리자인 경우 관리자 메인 페이지로 이동
 			msg = URLEncoder.encode("접근할 수 없습니다.", "UTF-8"); 
-			response.sendRedirect(request.getContextPath() + "/on/calendar?msg=" + msg);
+			response.sendRedirect(request.getContextPath() + "/on/cashbook?msg=" + msg);
 			return;
 		}
 		
 		int qNo = Integer.parseInt(request.getParameter("qNo"));
-		String memberId = request.getParameter("memberId"); 
-		
-		System.out.println(qNo + " <-- qNo(QuestionOneGet)");
-		System.out.println(memberId + " <-- memberId(QuestionOneGet)");
+		System.out.println(qNo + " <-- qNo(MyQuestionOneGet)");
 		
 		QuestionDao questionDao = new QuestionDao();
-		Question question = questionDao.selectQuestionOne(qNo);
+		Question question = questionDao.selectMyQuestionOne(memberId, qNo);
 		
 		AnswerDao answerDao = new AnswerDao();
 		Answer answer = answerDao.selectAnswerOne(memberId, qNo); 
 		
-		request.setAttribute("loginId", adminId);
+		request.setAttribute("loginId", memberId);
 		request.setAttribute("question", question);
 		request.setAttribute("answer", answer);
 		
-		request.getRequestDispatcher("/WEB-INF/view/admin/questionOne.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/view/member/myQuestionOne.jsp").forward(request, response);
 	}
 }
