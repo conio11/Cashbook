@@ -8,8 +8,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import cashbook.model.NoticeDao;
+import cashbook.vo.Admin;
+import cashbook.vo.Member;
 import cashbook.vo.Notice;
 
 @WebServlet("/onOff/noticeList")
@@ -21,8 +24,35 @@ public class NoticeListController extends HttpServlet {
 		// 비로그인 상태 or member는 조회만 가능
 		// 입력 버튼은 employee 로그인 시에만 보임
 		
+		// session 인증 검사 코드
+		HttpSession session = request.getSession();
+		Object loginInfo = session.getAttribute("loginInfo");
 		
-		String loginMemberId = (String) request.getAttribute("loginMemberId");
+		Member member = null;
+		String memberId = null;
+		Admin admin = null;
+		String adminId = null;
+		String loginId = null;
+		
+		if (loginInfo == null) {
+			System.out.println("비로그인 상태(NoticeListGet)");
+		} else if (loginInfo instanceof Member) {
+			member = (Member) loginInfo;
+			memberId = member.getMemberId();
+			System.out.println(memberId + " <-- memberId(NoticeListGet)");
+		} else {
+			admin = (Admin) loginInfo;
+			adminId = admin.getAdminId();
+			System.out.println(adminId + " <-- adminId(NoticeListGet)");
+		}
+		
+		if (memberId == null) {
+			loginId = adminId;
+			System.out.println(loginId + " <-- loginId(NoticeListGet)");
+		} else {
+			loginId = memberId;
+			System.out.println(loginId + " <-- loginId(NoticeListGet)");
+		}
 	
 		NoticeDao noticeDao = new NoticeDao();
 		
@@ -32,7 +62,7 @@ public class NoticeListController extends HttpServlet {
 		if (request.getParameter("currentPage") != null) {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
-		System.out.println(currentPage + " <-- currentPage(NoticeOneGet)");
+		System.out.println(currentPage + " <-- currentPage(NoticeListGet)");
 		
 		// 페이지 당 출력 행 수 
 		int rowPerPage = 5;
@@ -40,7 +70,7 @@ public class NoticeListController extends HttpServlet {
 		// 시작 행 번호 -> 0, 5, 10, 15, ...
 		// LIMIT(beginRow, rowPerPage)
 		int beginRow = (currentPage - 1) * rowPerPage;
-		System.out.println(beginRow + " <-- beginRow(NoticeOneGet)");
+		System.out.println(beginRow + " <-- beginRow(NoticeListGet)");
 	
 		// 전체 행 수
 		int totalRow = noticeDao.selectNoticeCnt();
@@ -51,8 +81,8 @@ public class NoticeListController extends HttpServlet {
 			lastPage += 1;
 		}
 		
-		System.out.println(totalRow + " <-- totalRow(NoticeOneGet)");
-		System.out.println(lastPage + " <-- lastPage(NoticeOneGet)");
+		System.out.println(totalRow + " <-- totalRow(NoticeListGet)");
+		System.out.println(lastPage + " <-- lastPage(NoticeListGet)");
 		
 		// [이전] [다음] 탭 사이 출력 행 수 
 		int pagePerPage = 5;
@@ -67,12 +97,12 @@ public class NoticeListController extends HttpServlet {
 			maxPage = lastPage;
 		}
 		
-		System.out.println(minPage + " <-- minPage(NoticeListOneGet)");
-		System.out.println(maxPage + " <-- maxPage(NoticeListOneGet)");
+		System.out.println(minPage + " <-- minPage(NoticeListGet)");
+		System.out.println(maxPage + " <-- maxPage(NoticeListGet)");
 		
 		List<Notice> list = noticeDao.selectNoticeAll(beginRow, rowPerPage);
 		
-		request.setAttribute("loginMemberId", loginMemberId);
+		request.setAttribute("loginId", loginId);
 		request.setAttribute("list", list);
 		
 		request.setAttribute("currentPage", currentPage);

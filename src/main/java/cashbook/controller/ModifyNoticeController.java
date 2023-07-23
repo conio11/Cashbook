@@ -8,8 +8,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import cashbook.model.NoticeDao;
+import cashbook.vo.Admin;
 import cashbook.vo.Notice;
 
 
@@ -17,6 +19,7 @@ import cashbook.vo.Notice;
 public class ModifyNoticeController extends HttpServlet {
 	// 공지 수정 jsp 파일로 이동
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		/*
 		String loginMemberId = (String) request.getAttribute("loginMemberId");
 		
 		String msg = "";
@@ -26,6 +29,25 @@ public class ModifyNoticeController extends HttpServlet {
 			response.sendRedirect(request.getContextPath() + "/onOff/noticeList?msg=" + msg);
 			return;
 		} 
+		*/
+		
+		// session 인증 검사 코드
+		HttpSession session = request.getSession();
+		
+		String msg = "";
+		Object loginInfo = session.getAttribute("loginInfo");
+		Admin admin = null;
+		String adminId = null;
+		if (loginInfo instanceof Admin) {
+			admin = (Admin) loginInfo;
+			adminId = admin.getAdminId();
+			System.out.println(adminId + " <-- adminId(ModifyNoticeGet)");
+		} else { // 고객인 경우 고객 메인 페이지로 이동
+			msg = URLEncoder.encode("접근할 수 없습니다.", "UTF-8"); 
+			response.sendRedirect(request.getContextPath() + "/on/calendar?msg=" + msg);
+			return;
+		}
+		
 		
 		NoticeDao noticeDao = new NoticeDao();
 		
@@ -37,12 +59,30 @@ public class ModifyNoticeController extends HttpServlet {
 		
 		request.setAttribute("notice", notice);
 		
-		request.getRequestDispatcher("/WEB-INF/view/modifyNotice.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/view/admin/modifyNotice.jsp").forward(request, response);
 		
 	}
 
 	// 공지 수정 액션
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// session 인증 검사 코드
+		HttpSession session = request.getSession();
+		
+		String msg = "";
+		Object loginInfo = session.getAttribute("loginInfo");
+		Admin admin = null;
+		String adminId = null;
+		if (loginInfo instanceof Admin) {
+			admin = (Admin) loginInfo;
+			adminId = admin.getAdminId();
+			System.out.println(adminId + " <-- adminId(ModifyNoticeGet)");
+		} else { // 고객인 경우 고객 메인 페이지로 이동
+			msg = URLEncoder.encode("접근할 수 없습니다.", "UTF-8"); 
+			response.sendRedirect(request.getContextPath() + "/on/calendar?msg=" + msg);
+			return;
+		}
+		
+		/*
 		String loginMemberId = (String) request.getAttribute("loginMemberId");
 		
 		String msg = "";
@@ -52,6 +92,7 @@ public class ModifyNoticeController extends HttpServlet {
 			response.sendRedirect(request.getContextPath() + "/onOff/noticeList?msg=" + msg);
 			return;
 		} 
+		*/
 		
 		NoticeDao noticeDao = new NoticeDao();
 		
@@ -78,5 +119,4 @@ public class ModifyNoticeController extends HttpServlet {
 			System.out.println("modify notice error!");
 		}
 	}
-
 }
