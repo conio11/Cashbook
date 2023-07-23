@@ -1,19 +1,32 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page import="cashbook.model.MemberDao"%>
-<%@ page import="cashbook.vo.Member"%>
-
-<%
-	// Member m = (Member) request.getAttribute("member"); // request 보낼 때 "member"라는 이름의 member 객체 생성
-%>
-
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="UTF-8">
 		<meta content="width=device-width, initial-scale=1.0" name="viewport">
-		<title>memberOne</title>
+		<title>removeMember</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+ 		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+		<script>
+			$(document).ready(function() {
+				const urlParams = new URL(location.href).searchParams;
+				const msg  = urlParams.get("msg");
+				if (msg != null) {
+					alert(msg);
+				}
+				
+				$("#removeMemberBtn").click(function() {
+					if ($("#memberPw").val() == "") {
+						alert("비밀번호를 입력해주세요.");	
+						$("#memberPw").focus();
+					} else {
+						$("#removeMember").submit();
+					}
+				});
+			});
+		</script>
 		
 		<meta content="" name="description">
 		<meta content="" name="keywords">
@@ -37,82 +50,62 @@
 		
 		<!-- Template Main CSS File -->
 		<link href="${pageContext.request.contextPath}/assets/css/style.css" rel="stylesheet">
-	
 	</head>
 	<body>
 		<jsp:include page="/WEB-INF/view/inc/memberHeader.jsp"></jsp:include>
 		<jsp:include page="/WEB-INF/view/inc/memberSidebar.jsp"></jsp:include>
 	
+		<main id="main" class="main">
 
-<%-- 		 <a href="${pageContext.request.contextPath}/on/calendar" class="btn btn-success">홈 화면으로</a>
-		 <br><br>
-		 <div class="text-center">
-			<h1>회원 상세정보</h1>
-		 </div>
-		 <br> --%>
+		    <div class="pagetitle">
+		      <h1>Data Tables</h1>
+		      <nav>
+		        <ol class="breadcrumb">
+		          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+		          <li class="breadcrumb-item">Tables</li>
+		          <li class="breadcrumb-item active">Data</li>
+		        </ol>
+		      </nav>
+		    </div><!-- End Page Title -->
 
-    <main id="main" class="main">
+		    <section class="section">
+		      <div class="row">
+		        <div class="col-lg-12">
+		
+		          <div class="card">
+		            <div class="card-body">
+		              <h5 class="card-title">Datatables</h5>
+		              <p>Add lightweight datatables to your project with using the <a href="https://github.com/fiduswriter/Simple-DataTables" target="_blank">Simple DataTables</a> library. Just add <code>.datatable</code> class name to any table you wish to conver to a datatable</p>
+		
+		              <!-- Table with stripped rows -->
+		              <form method="post" action="${pageContext.request.contextPath}/on/removeMember" id="removeMember">
+			              <table class="table table-bordered">
+			                  <tr>
+			                    <th scope="col" class="text-center">비밀번호 입력</th>
+			                    <td><input type="password" name="memberPw" id="memberPw" class="form-control"></td>
+			                  </tr>
+		             	 </table>
+						<button type="button" id="removeMemberBtn" class="btn btn-outline-secondary">회원 탈퇴</button>
+	              	</form>
+		              <br>
+		              <!-- End Table with stripped rows -->
 
-	    <div class="pagetitle">
-	      <h1>Data Tables</h1>
-	      <nav>
-	        <ol class="breadcrumb">
-	          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-	          <li class="breadcrumb-item">Tables</li>
-	          <li class="breadcrumb-item active">Data</li>
-	        </ol>
-	      </nav>
-	    </div><!-- End Page Title -->
-	
-	    <section class="section">
-	      <div class="row">
-	        <div class="col-lg-12">
-	
-	          <div class="card">
-	            <div class="card-body">
-	              <h5 class="card-title">Datatables</h5>
-	              <p>Add lightweight datatables to your project with using the <a href="https://github.com/fiduswriter/Simple-DataTables" target="_blank">Simple DataTables</a> library. Just add <code>.datatable</code> class name to any table you wish to conver to a datatable</p>
-	
-	              <!-- Table with stripped rows -->
-	              <table class="table table-bordered">
-	                  <tr>
-	                    <th scope="col" class="text-center">아이디</th>
-	                    <td>${member.memberId}</td>
-	                  </tr>
-		       			<tr>
-							<th scope="col" class="text-center">이름</th>
-							<td>${member.memberName}</td>
-						</tr>
-						<tr>
-							<th scope="col" class="text-center">이메일</th>
-							<td>${member.memberEmail}</td>
-						</tr>
-						<tr>
-							<th scope="col" class="text-center">가입일자</th>
-							<td>${member.createdate}</td>
-						</tr>
-						<tr>
-							<th scope="col" class="text-center">정보수정일자</th>
-							<td>${member.updatedate}</td>
-						</tr>
-	             	 </table>
-					<a href="${pageContext.request.contextPath}/on/modifyMember" class="btn btn-outline-secondary">회원정보수정</a>
-					<a href="${pageContext.request.contextPath}/on/removeMember" class="btn btn-outline-secondary">회원탈퇴</a>
-	              <br>
-	              <!-- End Table with stripped rows -->
-			  
+		            </div>
+		          </div>
+
+		        </div>
+		      </div>
+		    </section>
 		
-	            </div>
-	          </div>
-	
-	        </div>
-	      </div>
-	    </section>
-	
-	  </main><!-- End #main -->
-		
-		
-		
+		  </main><!-- End #main -->
+<%-- 		<div class="container mt-3">
+			<a href="${pageContext.request.contextPath}/on/calendar" class="btn btn-success">홈 화면으로</a>
+			<a href="${pageContext.request.contextPath}/on/memberOne" class="btn btn-success">이전</a>
+			<br>
+			<div class="text-center">
+				<h1>회원탈퇴</h1>
+			</div> --%>
+
 		<jsp:include page="/WEB-INF/view/inc/footer.jsp"></jsp:include> <!-- webapp 이후부터 경로 작성하기  -->
 	
 	    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
