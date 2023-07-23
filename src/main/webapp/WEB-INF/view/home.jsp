@@ -7,7 +7,7 @@
 	<head>
 	  <meta charset="utf-8">
 	  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-	  <title>cashbook</title>
+	  <title>home</title>
 	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 	  <script>
 		  	$(document).ready(function() {
@@ -40,8 +40,8 @@
 	
 	  <!-- Template Main CSS File -->
 	  <link href="${pageContext.request.contextPath}/assets/css/style.css" rel="stylesheet">
-	  
-    	<!-- =======================================================
+	
+	  <!-- =======================================================
 	  * Template Name: NiceAdmin
 	  * Updated: May 30 2023 with Bootstrap v5.3.0
 	  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
@@ -50,16 +50,15 @@
 	  ======================================================== -->
 	</head>
 	<body>
-		<jsp:include page="/WEB-INF/view/inc/adminHeader.jsp"></jsp:include>
-		<jsp:include page="/WEB-INF/view/inc/adminSidebar.jsp"></jsp:include>
+		<jsp:include page="/WEB-INF/view/inc/logoffHeader.jsp"></jsp:include>
+	    <jsp:include page="/WEB-INF/view/inc/logoffSidebar.jsp"></jsp:include>
 	
-	 	<main id="main" class="main">
-	
+	    <main id="main" class="main">
 		    <div class="pagetitle">
 		      <h1>Home</h1>
 		      <nav>
 		        <ol class="breadcrumb">
-		          <li class="breadcrumb-item active"><a href="${pageContext.request.contextPath}/on/cashbook">Home</a></li>
+		          <li class="breadcrumb-item active"><a href="${pageContext.request.contextPath}/off/home">Home</a></li>
 		        </ol>
 		      </nav>
 		    </div><!-- End Page Title -->
@@ -70,12 +69,14 @@
 		        <!-- Left side columns -->
 		        <div class="col-lg-12"> <!-- 전체 너비 설정 시 col-lg-12 -->
 		          <div class="row">
-		          
+		 
 		           <!-- Sales Card -->
 		            <div class="col-xxl-4 col-md-6">
 		              <div class="card info-card sales-card">
+		
 		                <div class="card-body">
 		                  <h5 class="card-title">현재 접속자</h5>
+		
 		                  <div class="d-flex align-items-center">
 		                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
 		                      <i class="bi bi-person"></i>
@@ -120,8 +121,8 @@
 		                  </div>
 		                </div>
 		              </div>
+		
 		            </div><!-- End Customers Card -->
-		            
 		            <!-- Reports -->
 		            <div class="col-12">
 		              <div class="card">
@@ -130,74 +131,73 @@
 		
 		                  <!-- Line Chart -->
 		                  <div id="reportsChart"></div>
-		                  <h5 class="card-title text-center">${targetYear}년 ${targetMonth + 1}월</h5>
-		          		  <div>
-		       			  	<a href="${pageContext.request.contextPath}/on/cashbook?targetYear=${targetYear}&targetMonth=${targetMonth - 1}" class="btn btn-outline-secondary">pre</a>
-		       				<a href="${pageContext.request.contextPath}/on/cashbook?targetYear=${targetYear}&targetMonth=${targetMonth + 1}" class="float-end btn btn-outline-secondary">next</a>
-						  </div>
-		       			  <br>
 		                  
-		                   <!-- Bordered Table -->
-			              <table class="table table-bordered" style="height: 600px;">
-			                <thead>
-			                  <tr class="text-center"> 
-			                    <th scope="col" class="text-bg-secondary">일</th>
-			                    <th scope="col" class="text-bg-secondary">월</th>
-			                    <th scope="col" class="text-bg-secondary">화</th>
-			                    <th scope="col" class="text-bg-secondary">수</th>
-			                    <th scope="col" class="text-bg-secondary">목</th>
-			                    <th scope="col" class="text-bg-secondary">금</th>
-			                    <th scope="col" class="text-bg-secondary">토</th>
-			                  </tr>
-			                </thead>
-			                <tbody>
-			                  <tr>
-			                    <c:forEach var="i" begin="0" end="${totalCell - 1}" step="1">
-								<c:set var="d" value="${i - beginBlank + 1}"></c:set> <!-- d = i - beginBlank + 1  -->
-							
-								<c:if test="${i != 0 && i % 7 == 0}">
-									</tr><tr>
-								</c:if>
-			
-								<c:if test="${d < 1}">
-									<td style="color: gray;">${preLastDate + d}</td>
-								</c:if>
-								<c:if test="${d > lastDate}">
-									<td style="color: gray;">${d - lastDate}</td>
-								</c:if>
-								<c:if test="${!(d < 1 || d > lastDate)}">
-									<td>${d}</td>
-								</c:if>
-							</c:forEach>
-			                  </tr>
-			                </tbody>
-			              </table>
-		                </div>
+		                   <h5 class="card-title text-center">${targetYear}년 ${targetMonth + 1}월</h5>
+		          			<div>
+		          				<a href="${pageContext.request.contextPath}/off/home?targetYear=${targetYear}&targetMonth=${targetMonth - 1}" class="btn btn-outline-primary">pre</a>
+		          				<a href="${pageContext.request.contextPath}/off/home?targetYear=${targetYear}&targetMonth=${targetMonth + 1}" class="float-end btn btn-outline-primary">next</a>
+		          			</div>
+		          			<br>
+		              <!-- Bordered Table -->
+		              <table class="table table-bordered" style="height: 600px;">
+		                <thead>
+		                  <tr class="text-center">
+		                    <th scope="col" class="text-bg-primary">일</th>
+		                    <th scope="col" class="text-bg-primary">월</th>
+		                    <th scope="col" class="text-bg-primary">화</th>
+		                    <th scope="col" class="text-bg-primary">수</th>
+		                    <th scope="col" class="text-bg-primary">목</th>
+		                    <th scope="col" class="text-bg-primary">금</th>
+		                    <th scope="col" class="text-bg-primary">토</th>
+		                  </tr>
+		                </thead>
+		                <tbody>
+		                  <tr>
+		                    <c:forEach var="i" begin="0" end="${totalCell - 1}" step="1">
+							<c:set var="d" value="${i - beginBlank + 1}"></c:set> <!-- d = i - beginBlank + 1  -->
+						
+							<c:if test="${i != 0 && i % 7 == 0}">
+								</tr><tr>
+							</c:if>
+		
+							<c:if test="${d < 1}">
+								<td style="color: gray;">${preLastDate + d}</td>
+							</c:if>
+							<c:if test="${d > lastDate}">
+								<td style="color: gray;">${d - lastDate}</td>
+							</c:if>
+							<c:if test="${!(d < 1 || d > lastDate)}">
+								<td>${d}</td>
+							</c:if>
+						</c:forEach>
+		                  </tr>
+		                </tbody>
+		              </table>
+		              <!-- End Bordered Table -->
 		              </div>
-		            </div><!-- End Reports -->
-					</div>
-				</div>
+		             </div>
+		            </div>
+	     		 </div>
+		      	</div>
 		      </div>
-      	  </section> 
-	  </main><!-- End #main -->
+		    </section> 
+	    </main><!-- End #main -->
+	  
+	    <jsp:include page="/WEB-INF/view/inc/footer.jsp"></jsp:include> <!-- webapp 이후부터 경로 작성하기  -->
+		
+	    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 	
-	  <jsp:include page="/WEB-INF/view/inc/footer.jsp"></jsp:include>
+	    <!-- Vendor JS Files -->
+	    <script src="${pageContext.request.contextPath}/assets/vendor/apexcharts/apexcharts.min.js"></script>
+	    <script src="${pageContext.request.contextPath}/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	    <script src="${pageContext.request.contextPath}/assets/vendor/chart.js/chart.umd.js"></script>
+	    <script src="${pageContext.request.contextPath}/assets/vendor/echarts/echarts.min.js"></script>
+	    <script src="${pageContext.request.contextPath}/assets/vendor/quill/quill.min.js"></script>
+	    <script src="${pageContext.request.contextPath}/assets/vendor/simple-datatables/simple-datatables.js"></script>
+	    <script src="${pageContext.request.contextPath}/assets/vendor/tinymce/tinymce.min.js"></script>
+	    <script src="${pageContext.request.contextPath}/assets/vendor/php-email-form/validate.js"></script>
 	
-	  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-	
-	  <!-- Vendor JS Files -->
-	  <script src="${pageContext.request.contextPath}/assets/vendor/apexcharts/apexcharts.min.js"></script>
-	  <script src="${pageContext.request.contextPath}/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-	  <script src="${pageContext.request.contextPath}/assets/vendor/chart.js/chart.umd.js"></script>
-	  <script src="${pageContext.request.contextPath}/assets/vendor/echarts/echarts.min.js"></script>
-	  <script src="${pageContext.request.contextPath}/assets/vendor/quill/quill.min.js"></script>
-	  <script src="${pageContext.request.contextPath}/assets/vendor/simple-datatables/simple-datatables.js"></script>
-	  <script src="${pageContext.request.contextPath}/assets/vendor/tinymce/tinymce.min.js"></script>
-	  <script src="${pageContext.request.contextPath}/assets/vendor/php-email-form/validate.js"></script>
-	
-	  <!-- Template Main JS File -->
-	  <script src="${pageContext.request.contextPath}/assets/js/main.js"></script>
-	
+	    <!-- Template Main JS File -->
+		<script src="${pageContext.request.contextPath}/assets/js/main.js"></script>
 	</body>
-
 </html>
