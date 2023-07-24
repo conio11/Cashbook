@@ -92,208 +92,191 @@
 		
 		<!-- Template Main CSS File -->
 		<link href="${pageContext.request.contextPath}/assets/css/style.css" rel="stylesheet">
-	
-		
 	</head>
 	<body>
 		<jsp:include page="/WEB-INF/view/inc/memberHeader.jsp"></jsp:include>
 		<jsp:include page="/WEB-INF/view/inc/memberSidebar.jsp"></jsp:include>
-		
-		
-		<main id="main" class="main">
 
+		<main id="main" class="main">
 		    <div class="pagetitle">
-		      <h1>Data Tables</h1>
+		      <h1>My Profile</h1>
 		      <nav>
 		        <ol class="breadcrumb">
-		          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-		          <li class="breadcrumb-item">Tables</li>
-		          <li class="breadcrumb-item active">Data</li>
+		          <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/on/calendar">Home</a></li>
+		          <li class="breadcrumb-item">Pages</li>
+		          <li class="breadcrumb-item active">My Profile</li>
 		        </ol>
 		      </nav>
 		    </div><!-- End Page Title -->
 
-		    
-		  <section class="section profile">
-	        <div class="col-lg-12">
-	
-	          <div class="card">
-	            <div class="card-body pt-3">
-	              <!-- Bordered Tabs -->
-	              <ul class="nav nav-tabs nav-tabs-bordered">
-	
-	                <li class="nav-item">
-	                  <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">나의 정보</button>
-	                </li>
-	
-	                <li class="nav-item">
-	                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">정보 수정</button>
-	                </li>
-	
-	                <li class="nav-item">
-	                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">비밀번호 변경</button>
-	                </li>
-	                
-	                 <li class="nav-item">
-	                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-remove">회원 탈퇴</button>
-	                </li>
-	
-	              </ul>
-	              <div class="tab-content pt-2">
-	
-	                <div class="tab-pane fade show active profile-overview" id="profile-overview">
-	                
-	                  <h5 class="card-title">Profile Details</h5>
-	
-	                  <div class="row">
-	                    <div class="col-lg-3 col-md-4 label ">아이디</div>
-	                    <div class="col-lg-9 col-md-8">${member.memberId}</div>
-	                  </div>
-	
-	                  <div class="row">
-	                    <div class="col-lg-3 col-md-4 label">이름</div>
-	                    <div class="col-lg-9 col-md-8">${member.memberName}</div>
-	                  </div>
-	
-	                  <div class="row">
-	                    <div class="col-lg-3 col-md-4 label">이메일</div>
-	                    <div class="col-lg-9 col-md-8">${member.memberEmail}</div>
-	                  </div>
-	
-	                  <div class="row">
-	                    <div class="col-lg-3 col-md-4 label">가입일자</div>
-	                    <div class="col-lg-9 col-md-8">${member.createdate}</div>
-	                  </div>
-	
-	                  <div class="row">
-	                    <div class="col-lg-3 col-md-4 label">정보수정일자</div>
-	                    <div class="col-lg-9 col-md-8">${member.updatedate}</div>
-	                  </div>
-	                </div>
-	
-	                <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
-	
-	                  <!-- Profile Edit Form -->
-	                  <form method="post" action="${pageContext.request.contextPath}/on/modifyMemberInfo" id="modifyMemberInfo">
-	                    <div class="row mb-3">
-	                      <label for="fullName" class="col-md-4 col-lg-3 col-form-label">아이디</label>
-	                      <div class="col-md-8 col-lg-9">
-	                        <input type="text" name="memberId" class="form-control" id="memberId" value="${member.memberId}" disabled="disabled">
-	                      </div>
-	                    </div>
-	                    <div class="row mb-3">
-	                      <label for="Country" class="col-md-4 col-lg-3 col-form-label">이름</label>
-	                      <div class="col-md-8 col-lg-9">
-	                        <input type="text" name="newName" class="form-control" id="newName" value="${member.memberName}">
-	                      </div>
-	                    </div>
-	                    <div class="row mb-3">
-	                      <label for="Address" class="col-md-4 col-lg-3 col-form-label">이메일</label>
-	                      <div class="col-md-8 col-lg-9">
-	                        <input type="email" name="newEmail" class="form-control" id="newEmail" value="${member.memberEmail}">
-	                      </div>
-	                    </div>
-	
-	                    <div class="text-center">
-	                      <button type="button" class="btn btn-primary" id="modifyMemberInfoBtn">정보 수정</button>
-	                    </div>
-	                  </form><!-- End Profile Edit Form -->
-	
-	                </div>
-	
-	
-	                <div class="tab-pane fade pt-3" id="profile-change-password">
-	                  <!-- Change Password Form -->
-	                  <form method="post" action="${pageContext.request.contextPath}/on/modifyMember" id="modifyMember">
-	                    <div class="row mb-3">
-	                      <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">현재 비밀번호 입력</label>
-	                      <div class="col-md-8 col-lg-9">
-	                        <input type="password" name="memberPw" id="memberPw" class="form-control">
-	                      </div>
-	                    </div>
-	
-	                    <div class="row mb-3">
-	                      <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">새 비밀번호 입력</label>
-	                      <div class="col-md-8 col-lg-9">
-	                        <input type="password" name="newPw1" id="newPw1" class="form-control">
-							<span id="newPwMsg" style="color: red;"></span>	
-	                      </div>
-	                    </div>
-	
-	                    <div class="row mb-3">
-	                      <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">새 비밀번호 다시 입력</label>
-	                      <div class="col-md-8 col-lg-9">
-	                      	<input type="password" name="newPw2" id="newPw2" class="form-control">                       
-	                      </div>
-	                    </div>
-	
-	                    <div class="text-center">
-	                      <button type="button" id="modifyMemberBtn" class="btn btn-primary">비밀번호 변경</button>
-	                    </div>
-	                  </form><!-- End Change Password Form -->
-	                </div>
-	                
-	                 <div class="tab-pane fade pt-3" id="profile-change-password">
-	                  <!-- Change Password Form -->
-	                  <form method="post" action="${pageContext.request.contextPath}/on/modifyMember" id="modifyMember">
-	                    <div class="row mb-3">
-	                      <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">현재 비밀번호 입력</label>
-	                      <div class="col-md-8 col-lg-9">
-	                        <input type="password" name="memberPw" id="memberPw" class="form-control">
-	                      </div>
-	                    </div>
-	
-	                    <div class="row mb-3">
-	                      <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">새 비밀번호 입력</label>
-	                      <div class="col-md-8 col-lg-9">
-	                        <input type="password" name="newPw1" id="newPw1" class="form-control">
-							<span id="newPwMsg" style="color: red;"></span>	
-	                      </div>
-	                    </div>
-	
-	                    <div class="row mb-3">
-	                      <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">새 비밀번호 다시 입력</label>
-	                      <div class="col-md-8 col-lg-9">
-	                      	<input type="password" name="newPw2" id="newPw2" class="form-control">                       
-	                      </div>
-	                    </div>
-	
-	                    <div class="text-center">
-	                      <button type="button" id="modifyMemberBtn" class="btn btn-primary">비밀번호 변경</button>
-	                    </div>
-	                  </form><!-- End Change Password Form -->
-	                  </div>
-	                  
-   	                 <div class="tab-pane fade pt-3" id="profile-remove">
-	                  <!-- Change Password Form -->
-	                  <form method="post" action="${pageContext.request.contextPath}/on/removeMember" id="removeMember">
-	                    <div class="row mb-3">
-	                      <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">비밀번호 입력</label>
-	                      <div class="col-md-8 col-lg-9">
-	                        <input type="password" name="removeMemberPw" id="removeMemberPw" class="form-control">
-	                      </div>
-	                    </div>
-	
-
-	
-	                    <div class="text-center">
-	                      <button type="button" id="removeMemberBtn" class="btn btn-primary">회원 탈퇴</button>
-	                    </div>
-	                  </form><!-- End Change Password Form -->
-	                  </div>
-	                
-	
-	              </div><!-- End Bordered Tabs -->
-	
-	            
-	            
-	          </div>
-	
-	        </div>
-	  		</div>
-	    </section>
+		 	<section class="section profile">
+		        <div class="col-lg-12">
+		          <div class="card">
+		            <div class="card-body pt-3">
+		              <!-- Bordered Tabs -->
+		              <ul class="nav nav-tabs nav-tabs-bordered">
+   
+		                <li class="nav-item">
+		                  <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">나의 정보</button>
+		                </li>
 		
-	  </main><!-- End #main -->
+		                <li class="nav-item">
+		                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">정보 수정</button>
+		                </li>
+		
+		                <li class="nav-item">
+		                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">비밀번호 변경</button>
+		                </li>
+		                
+		                 <li class="nav-item">
+		                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-remove">회원 탈퇴</button>
+		                </li>
+
+		              </ul>
+ 
+		              <div class="tab-content pt-2">
+		                <div class="tab-pane fade show active profile-overview" id="profile-overview">
+		                  <h5 class="card-title">Profile Details</h5>
+		
+		                  <div class="row">
+		                    <div class="col-lg-3 col-md-4 label ">아이디</div>
+		                    <div class="col-lg-9 col-md-8">${member.memberId}</div>
+		                  </div>
+		
+		                  <div class="row">
+		                    <div class="col-lg-3 col-md-4 label">이름</div>
+		                    <div class="col-lg-9 col-md-8">${member.memberName}</div>
+		                  </div>
+		
+		                  <div class="row">
+		                    <div class="col-lg-3 col-md-4 label">이메일</div>
+		                    <div class="col-lg-9 col-md-8">${member.memberEmail}</div>
+		                  </div>
+		
+		                  <div class="row">
+		                    <div class="col-lg-3 col-md-4 label">가입일자</div>
+		                    <div class="col-lg-9 col-md-8">${member.createdate}</div>
+		                  </div>
+		
+		                  <div class="row">
+		                    <div class="col-lg-3 col-md-4 label">정보수정일자</div>
+		                    <div class="col-lg-9 col-md-8">${member.updatedate}</div>
+		                  </div>
+		                </div>
+		
+		                <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+		
+		                  <!-- Profile Edit Form -->
+		                  <form method="post" action="${pageContext.request.contextPath}/on/modifyMemberInfo" id="modifyMemberInfo">
+		                    <div class="row mb-3">
+		                      <label for="fullName" class="col-md-4 col-lg-3 col-form-label">아이디</label>
+		                      <div class="col-md-8 col-lg-9">
+		                        <input type="text" name="memberId" class="form-control" id="memberId" value="${member.memberId}" disabled="disabled">
+		                      </div>
+		                    </div>
+		                    <div class="row mb-3">
+		                      <label for="Country" class="col-md-4 col-lg-3 col-form-label">이름</label>
+		                      <div class="col-md-8 col-lg-9">
+		                        <input type="text" name="newName" class="form-control" id="newName" value="${member.memberName}">
+		                      </div>
+		                    </div>
+		                    <div class="row mb-3">
+		                      <label for="Address" class="col-md-4 col-lg-3 col-form-label">이메일</label>
+		                      <div class="col-md-8 col-lg-9">
+		                        <input type="email" name="newEmail" class="form-control" id="newEmail" value="${member.memberEmail}">
+		                      </div>
+		                    </div>
+		
+		                    <div class="text-center">
+		                      <button type="button" class="btn btn-primary" id="modifyMemberInfoBtn">정보 수정</button>
+		                    </div>
+		                  </form><!-- End Profile Edit Form -->
+		                </div>
+		
+		                <div class="tab-pane fade pt-3" id="profile-change-password">
+		                  <!-- Change Password Form -->
+		                  <form method="post" action="${pageContext.request.contextPath}/on/modifyMember" id="modifyMember">
+		                    <div class="row mb-3">
+		                      <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">현재 비밀번호 입력</label>
+		                      <div class="col-md-8 col-lg-9">
+		                        <input type="password" name="memberPw" id="memberPw" class="form-control">
+		                      </div>
+		                    </div>
+		
+		                    <div class="row mb-3">
+		                      <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">새 비밀번호 입력</label>
+		                      <div class="col-md-8 col-lg-9">
+		                        <input type="password" name="newPw1" id="newPw1" class="form-control">
+								<span id="newPwMsg" style="color: red;"></span>	
+		                      </div>
+		                    </div>
+		
+		                    <div class="row mb-3">
+		                      <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">새 비밀번호 다시 입력</label>
+		                      <div class="col-md-8 col-lg-9">
+		                      	<input type="password" name="newPw2" id="newPw2" class="form-control">                       
+		                      </div>
+		                    </div>
+		
+		                    <div class="text-center">
+		                      <button type="button" id="modifyMemberBtn" class="btn btn-primary">비밀번호 변경</button>
+		                    </div>
+		                  </form><!-- End Change Password Form -->
+		                </div>
+		                
+		                 <div class="tab-pane fade pt-3" id="profile-change-password">
+		                  <!-- Change Password Form -->
+		                  <form method="post" action="${pageContext.request.contextPath}/on/modifyMember" id="modifyMember">
+		                    <div class="row mb-3">
+		                      <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">현재 비밀번호 입력</label>
+		                      <div class="col-md-8 col-lg-9">
+		                        <input type="password" name="memberPw" id="memberPw" class="form-control">
+		                      </div>
+		                    </div>
+		
+		                    <div class="row mb-3">
+		                      <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">새 비밀번호 입력</label>
+		                      <div class="col-md-8 col-lg-9">
+		                        <input type="password" name="newPw1" id="newPw1" class="form-control">
+								<span id="newPwMsg" style="color: red;"></span>	
+		                      </div>
+		                    </div>
+		
+		                    <div class="row mb-3">
+		                      <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">새 비밀번호 다시 입력</label>
+		                      <div class="col-md-8 col-lg-9">
+		                      	<input type="password" name="newPw2" id="newPw2" class="form-control">                       
+		                      </div>
+		                    </div>
+		
+		                    <div class="text-center">
+		                      <button type="button" id="modifyMemberBtn" class="btn btn-primary">비밀번호 변경</button>
+		                    </div>
+		                  </form><!-- End Change Password Form -->
+		                  </div>
+		                  
+	   	                 <div class="tab-pane fade pt-3" id="profile-remove">
+		                  <!-- Change Password Form -->
+		                  <form method="post" action="${pageContext.request.contextPath}/on/removeMember" id="removeMember">
+		                    <div class="row mb-3">
+		                      <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">비밀번호 입력</label>
+		                      <div class="col-md-8 col-lg-9">
+		                        <input type="password" name="removeMemberPw" id="removeMemberPw" class="form-control">
+		                      </div>
+		                    </div>
+		                    <div class="text-center">
+		                      <button type="button" id="removeMemberBtn" class="btn btn-primary">회원 탈퇴</button>
+		                    </div>
+		                  </form><!-- End Change Password Form -->
+		                  </div>
+		              </div><!-- End Bordered Tabs -->
+		          </div>
+		        </div>
+		  		</div>
+		    </section>
+		    <a href="${pageContext.request.contextPath}/on/calendar" class="btn btn-outline-primary">이전</a>
+	 	</main><!-- End #main -->
+       	
 		  
 		<jsp:include page="/WEB-INF/view/inc/footer.jsp"></jsp:include> <!-- webapp 이후부터 경로 작성하기  -->
 	
