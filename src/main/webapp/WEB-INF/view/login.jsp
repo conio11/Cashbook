@@ -3,31 +3,32 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	  <meta charset="utf-8">
-	  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-	  <title>login</title>
-	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
-	  <script>
-			$(document).ready(function() {
+		<meta charset="utf-8">
+	    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+	    <title>login</title>
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+	    <script>
+	    	$(document).ready(function() {
 				const urlParams = new URL(location.href).searchParams;
 				const msg = urlParams.get("msg");
 				if (msg != null) {
 					alert(msg);
 				}
-				
-	/* 			$("#loginBtn").click(function() {
-					if ($("#memberId").val() == "") {
-						alert("아이디를 입력해주세요.");
-						$("#memberId").focus();
-					} else if ($("#memberPw").val() == "") {
-						alert("비밀번호를 입력해주세요.");
-						$("#memberPw").focus();
-					} else {
-						$("#login").submit();
-					}
-				}); */
+					
+			/* 			
+			$("#loginBtn").click(function() {
+				if ($("#loginId").val() == "") {
+					alert("아이디를 입력해주세요.");
+					$("#loginId").focus();
+				} else if ($("#loginPw").val() == "") {
+					alert("비밀번호를 입력해주세요.");
+					$("#loginPw").focus();
+				} else {
+					$("#login").submit();
+				}
+			}); */
 			});
-		</script> 
+	  </script> 
 	  <meta content="" name="description">
 	  <meta content="" name="keywords">
 	
@@ -50,21 +51,11 @@
 	
 	  <!-- Template Main CSS File -->
 	  <link href="${pageContext.request.contextPath}/assets/css/style.css" rel="stylesheet">
-	
-	  <!-- =======================================================
-	  * Template Name: NiceAdmin
-	  * Updated: May 30 2023 with Bootstrap v5.3.0
-	  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-	  * Author: BootstrapMade.com
-	  * License: https://bootstrapmade.com/license/
-	  ======================================================== -->
 	</head>
 	
 	<body>
-	
 	  <main>
-	    <div class="container">
-	
+	  	<div class="container">
 	      <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
 	        <div class="container">
 	          <div class="row justify-content-center">
@@ -78,31 +69,26 @@
 	              </div><!-- End Logo -->
 	
 	              <div class="card mb-3">
-	
 	                <div class="card-body">
-	
 	                  <div class="pt-4 pb-2">
 	                    <h5 class="card-title text-center pb-0 fs-4">로그인</h5>
 	                    <p class="text-center small">ID, 패스워드를 입력하세요.</p>
 	                  </div>
 	
 	                  <form method="post" action="${pageContext.request.contextPath}/off/login" id="login" class="row g-3 needs-validation" novalidate>
-	
 	                    <div class="col-12">
-	                      <label for="memberId" class="form-label">ID</label>
+	                      <label for="loginId" class="form-label">ID</label>
 	                      <div class="input-group has-validation">
 	                       <!--  <span class="input-group-text" id="inputGroupPrepend">@</span> -->
-	                        <input type="text" name="memberId" class="form-control" id="memberId" value="${memberId}" required>
+	                        <input type="text" name="loginId" class="form-control" id="loginId" value="${loginId}" required>
 	                        <div class="invalid-feedback">ID를 입력하세요.</div>
 	                      </div>
 	                    </div>
-	
 	                    <div class="col-12">
-	                      <label for="memberPw" class="form-label">Password</label>
-	                      <input type="password" name="memberPw" id="memberPw" class="form-control" required>
-	                      <div class="invalid-feedback">비밀번호를 입력하세요.</div>
+	                      <label for="loginPw" class="form-label">Password</label>
+	                      <input type="password" name="loginPw" id="loginPw" class="form-control" required>
+	                      <div class="invalid-feedback">패스워드를 입력하세요.</div>
 	                    </div>
-	
 	                    <div class="col-12">
 	                      <div class="form-check">
 	                        <input class="form-check-input" type="checkbox" name="idSave" value="y" id="idSave">
@@ -113,27 +99,23 @@
 	                      <button class="btn btn-primary w-100" type="submit" id="loginBtn">로그인</button>
 	                    </div>
 	                    <div class="col-12">
-	                      <p class="small mb-0">회원이 아니신가요?<a href="${pageContext.request.contextPath}/off/addMember">&nbsp;회원가입</a></p>
+	                      <p class="small mb-0">회원이 아니신가요?
+	                      	<a href="${pageContext.request.contextPath}/off/addMember">&nbsp;회원가입</a>
+	                      </p>
 	                    </div>
+	                    <div class="col-12">
+                       		<a href="${pageContext.request.contextPath}/off/home" class="small mb-0">홈 화면으로</a>	
+                       	</div>
 	                  </form>
-	
 	                </div>
 	              </div>
-	
 	              <div class="credits">
-	                <!-- All the links in the footer should remain intact. -->
-	                <!-- You can delete the links only if you purchased the pro version. -->
-	                <!-- Licensing information: https://bootstrapmade.com/license/ -->
-	                <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
 	                Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
 	              </div>
-	
 	            </div>
 	          </div>
 	        </div>
-	
 	      </section>
-	
 	    </div>
 	  </main><!-- End #main -->
 	
