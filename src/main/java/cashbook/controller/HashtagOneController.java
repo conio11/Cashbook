@@ -35,7 +35,22 @@ public class HashtagOneController extends HttpServlet {
 		System.out.println(memberId + " <-- memberId(HashtagOneGet)");
 		*/
 		
-		String loginMemberId = (String) request.getAttribute("loginMemberId");
+		// session 인증 검사 코드
+		HttpSession session = request.getSession();
+		
+		String msg = "";
+		Object loginInfo = session.getAttribute("loginInfo");
+		Member member = null;
+		String memberId = null;
+		if (loginInfo instanceof Member) {
+			member = (Member) loginInfo;
+			memberId = member.getMemberId();
+			System.out.println(memberId + " <-- memberId(HashtagOneGet)");
+		} else { // 관리자인 경우 관리자 메인 페이지로 이동
+			msg = URLEncoder.encode("접근할 수 없습니다.", "UTF-8"); 
+			response.sendRedirect(request.getContextPath() + "/on/cashbook?msg=" + msg);
+			return;
+		}
 		
 		
 		String word = request.getParameter("word");
@@ -60,7 +75,7 @@ public class HashtagOneController extends HttpServlet {
 		System.out.println(beginRow + " <-- beginRow(HashtagOneGet)");
 		
 		// 전체 행 수
-		int totalRow = hashtagDao.selectHashtagOneCnt(loginMemberId, word);
+		int totalRow = hashtagDao.selectHashtagOneCnt(memberId, word);
 		
 		// 마지막 페이지
 		int lastPage = totalRow / rowPerPage;
@@ -88,48 +103,9 @@ public class HashtagOneController extends HttpServlet {
 		System.out.println(minPage + " <-- minPage(HashtagOneGet)");
 		System.out.println(maxPage + " <-- maxPage(HashtagOneGet)");
 		
-		/*
-		<!-- Pagination -->
-		<div class="flex-l-m flex-w w-full p-t-10 m-lr--7" style="justify-content: center">
-		<%
-			// minPage가 1보다 클 때만 [이전] 탭 출력
-			if (minPage > 1) {
-		%>	
-				<a href="<%=request.getContextPath()%>/order/orderList.jsp?currentPage=<%=minPage - pagePerPage%>&searchId=<%=searchId%>&orderStatus=<%=orderStatus%><%=check%>" class="flex-c-m how-pagination1 trans-04 m-all-7">이전</a>
-		<%
-			}
-
-			// [이전] [다음] 탭 내에서 반복
-			for (int i = minPage; i <= maxPage; i++) {
-				if (currentPage == i) { // 해당 페이지는 링크 없이 표시 (css 적용 전)
-		%>
-					<a href="#" class="flex-c-m how-pagination1 trans-04 m-all-7 active-pagination1">
-						<%=i%>
-					</a>
-		<% 			
-				} else { // 현재 페이지가 아닌 나머지 페이지에는 번호를 링크로 표시 (클릭 시 해당 번호 페이지로 이동)
-		%>
-					<a href="<%=request.getContextPath()%>/order/orderList.jsp?currentPage=<%=i%>&searchId=<%=searchId%>&orderStatus=<%=orderStatus%><%=check%>" class="flex-c-m how-pagination1 trans-04 m-all-7">
-						<%=i%>
-					</a>
-		<%
-				}
-			}
+		List<Map<String, Object>> list = hashtagDao.selectHashtagOne(memberId, word, beginRow, rowPerPage);
 		
-			if (maxPage < lastPage) { // [이전] [다음] 탭 사이 가장 큰 숫자가 마지막 페이지보다 작을 때만 [다음] 버튼 생성	
-		%>
-				<a href="<%=request.getContextPath()%>/order/orderList.jsp?currentPage=<%=minPage + pagePerPage%>&searchId=<%=searchId%>&orderStatus=<%=orderStatus%><%=check%>" class="flex-c-m how-pagination1 trans-04 m-all-7">
-					다음
-				</a>
-		<%
-			}
-		%>
-		
-		*/
-		
-		List<Map<String, Object>> list = hashtagDao.selectHashtagOne(loginMemberId, word, beginRow, rowPerPage);
-		
-		request.setAttribute("memberId", loginMemberId);
+		request.setAttribute("loginId", memberId);
 		request.setAttribute("word", word);
 		request.setAttribute("list", list);
 		
@@ -139,6 +115,6 @@ public class HashtagOneController extends HttpServlet {
 		request.setAttribute("minPage", minPage);
 		request.setAttribute("maxPage", maxPage);
 		
-		request.getRequestDispatcher("/WEB-INF/view/hashtagOne.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/view/member/hashtagOne.jsp").forward(request, response);
 	}
 }
