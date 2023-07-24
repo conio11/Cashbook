@@ -23,24 +23,23 @@ public class AddCashbookController extends HttpServlet {
 	// 입력폼
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		/*
-		// session 유효성 검사
+		// session 인증 검사 코드
 		HttpSession session = request.getSession();
+		
 		String msg = "";
-		if (session.getAttribute("loginMember") == null) {
-			msg = URLEncoder.encode("로그인 후 이용 가능합니다.", "UTF-8"); 
-			response.sendRedirect(request.getContextPath() + "/login?msg=" + msg);
+		Object loginInfo = session.getAttribute("loginInfo");
+		Member member = null;
+		String memberId = null;
+		if (loginInfo instanceof Member) {
+			member = (Member) loginInfo;
+			memberId = member.getMemberId();
+			System.out.println(memberId + " <-- memberId(AddCashbookGet)");
+		} else { // 관리자인 경우 관리자 메인 페이지로 이동
+			msg = URLEncoder.encode("접근할 수 없습니다.", "UTF-8"); 
+			response.sendRedirect(request.getContextPath() + "/on/cashbook?msg=" + msg);
 			return;
 		}
-		
-		HttpSession session = request.getSession();
-		Member loginMember = (Member) session.getAttribute("loginMember");
-		String memberId = loginMember.getMemberId();
-		System.out.println(memberId + " <-- memberId(AddCashbookGet)");
-		*/
-		
-
-		
+	
 		// request 매개값 - 날짜
 		int targetYear = Integer.parseInt(request.getParameter("targetYear"));
 		int targetMonth = Integer.parseInt(request.getParameter("targetMonth"));
@@ -50,30 +49,35 @@ public class AddCashbookController extends HttpServlet {
 		System.out.println(targetMonth + " <-- targetMonth(AddCashbookGet)");
 		System.out.println(targetDate + " <-- targetDate(AddCashbookGet)");
 		
+		request.setAttribute("loginId", memberId);
 		request.setAttribute("targetYear", targetYear);
 		request.setAttribute("targetMonth", targetMonth);
 		request.setAttribute("targetDate", targetDate);
 		
 		// 나머지 데이터는 입력 폼에서 사용자가 입력
-		request.getRequestDispatcher("/WEB-INF/view/addCashbook.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/view/member/addCashbook.jsp").forward(request, response);
 	}
 
 	// 입력 액션
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// request.setCharacterEncoding("UTF-8");
-		// session 유효성 검사
-		/*
-		 * HttpSession session = request.getSession(); String msg = ""; if
-		 * (session.getAttribute("loginMember") == null) { msg =
-		 * URLEncoder.encode("로그인 후 이용 가능합니다.", "UTF-8");
-		 * response.sendRedirect(request.getContextPath() + "/login?msg=" + msg);
-		 * return; } Member loginMember = (Member) session.getAttribute("loginMember");
-		 * String memberId = loginMember.getMemberId(); System.out.println(memberId +
-		 * " <-- memberId(AddCashbookPost)");
-		 */
+		// session 인증 검사 코드
+		HttpSession session = request.getSession();
 		
-		String memberId = (String) request.getAttribute("loginMemberId");
+		String msg = "";
+		Object loginInfo = session.getAttribute("loginInfo");
+		Member member = null;
+		String memberId = null;
+		if (loginInfo instanceof Member) {
+			member = (Member) loginInfo;
+			memberId = member.getMemberId();
+			System.out.println(memberId + " <-- memberId(AddCashbookGet)");
+		} else { // 관리자인 경우 관리자 메인 페이지로 이동
+			msg = URLEncoder.encode("접근할 수 없습니다.", "UTF-8"); 
+			response.sendRedirect(request.getContextPath() + "/on/cashbook?msg=" + msg);
+			return;
+		}
+		
 		
 		Cashbook cashbook = new Cashbook();
 		CashbookDao cashbookDao = new CashbookDao();
@@ -125,71 +129,47 @@ public class AddCashbookController extends HttpServlet {
 		
 		if (cashbookNo == 0) { // 0 반환 시 입력 실패
 			System.out.println("입력 실패");
-			response.sendRedirect(request.getContextPath() + "/on/addCashbook");
+			msg = URLEncoder.encode("입력에 실패했습니다. 다시 시도해 주세요.", "UTF-8");
+			response.sendRedirect(request.getContextPath() + "/on/addCashbook?msg=" + msg);
 			return;
-		}
-		
-		// 입력 성공 -> 해시태그가 있다면 -> 해시태그 추출 -> 해시태그 입력(반복)
-		// 해시태그 추출 알고리즘
-		// # # 구디 #구디 #자바
-		HashtagDao hashtagDao = new HashtagDao(); 
-		
-		String memo1 = cashbook.getMemo();
-		System.out.println(memo1 + " <-- memo1(AddCashbookPost)");
-		
-		String memo2 = memo1.replace("#", " #"); // "#구디#아카데미" -> " #구디 #아카데미"
-		System.out.println(memo2 + " <-- memo2(AddCashbookPost)");
-		
-		Set<String> set = new HashSet<String>(); // 중복된 해시태그방지를 위해 set자료구조를 사용
-		
-		// 해시태그가 여러 개이면 반복해서 입력
-		for (String ht : memo2.split(" ")) { // split 된 배열을 Set으로 변경 -> 중복 내용 제거 가능 (#구디 #구디)
-			if (ht.contains("#")) {
-				String ht2 = ht.replace("#", ""); // # 삭제
-				if (ht2.length() > 0) {
-					set.add(ht2); // set: 중복값 추가되지 않음
-					System.out.println("해시태그 입력 성공(AddCashbookPost)");
+		} else {
+			System.out.println("입력 성공");
+			msg = URLEncoder.encode("입력이 완료되었습니다.", "UTF-8");
+			// 입력 성공 -> 해시태그가 있다면 -> 해시태그 추출 -> 해시태그 입력(반복)
+			// 해시태그 추출 알고리즘
+			// # # 구디 #구디 #자바
+			HashtagDao hashtagDao = new HashtagDao(); 
+			
+			String memo1 = cashbook.getMemo();
+			System.out.println(memo1 + " <-- memo1(AddCashbookPost)");
+			
+			String memo2 = memo1.replace("#", " #"); // "#구디#아카데미" -> " #구디 #아카데미"
+			System.out.println(memo2 + " <-- memo2(AddCashbookPost)");
+			
+			Set<String> set = new HashSet<String>(); // 중복된 해시태그 방지를 위해 set 자료구조 사용
+			
+			// 해시태그가 여러 개이면 반복해서 입력
+			for (String ht : memo2.split(" ")) { // split 된 배열을 Set으로 변경 -> 중복 내용 제거 가능 (#구디 #구디)
+				if (ht.contains("#")) {
+					String ht2 = ht.replace("#", ""); // # 삭제
+					if (ht2.length() > 0) {
+						set.add(ht2); // set: 중복값 추가되지 않음
+						System.out.println("해시태그 입력 성공(AddCashbookPost)");
+					}
 				}
 			}
-		}
-		
-		for (String s : set) {
-			Hashtag hashtag = new Hashtag();
-			hashtag.setCashbookNo(cashbookNo);
-			hashtag.setWord(s);
-			hashtagDao.insertHashtag(hashtag);
-		  }	
-		
-		
-		/*
-		HashtagDao hashtagDao = new HashtagDao();
-		String memo = cashbook.getMemo();
-		String memo2 = memo.replace("#", " #"); // "#구디#아카데미" ->" #구디 #아카데미" 
-		
-        Set<String> set = new HashSet<String>(); // 중복된 해시태그방지를 위해 set자료구조를 사용
-
-		for(String ht : memo2.split(" ")) { // issue : split된 배열을 Set으로 변경하면 중복된 내용 제거 가능
-			if (ht.startsWith("#")) {
-                String ht2 = ht.replace("#", "");
-			    if(ht2.length() > 0) {
-                    set.add(ht2); // set은 중복된 값은 add되지 않는다
-			    }
-            }
-		}
-		
-        for(String s : set) {
-        		Hashtag hashtag = new Hashtag();
+			
+			for (String s : set) {
+				Hashtag hashtag = new Hashtag();
 				hashtag.setCashbookNo(cashbookNo);
 				hashtag.setWord(s);
 				hashtagDao.insertHashtag(hashtag);
-        }
-		// redirect -> cashbookController -> forward -> cashbook.jsp
+			  }	
+			
+			// redirect -> cashbookController -> forward -> cashbook.jsp
 
-		  
-		 
-		 */
-		
-		// redirect -> cashbookListOneListController
-		response.sendRedirect(request.getContextPath() + "/on/cashbookListOne?targetYear=" + targetYear + "&targetMonth=" + (targetMonth - 1) + "&targetDate=" + targetDate);
-	}
+			// redirect -> cashbookListOneListController
+			response.sendRedirect(request.getContextPath() + "/on/cashbookListOne?targetYear=" + targetYear + "&targetMonth=" + (targetMonth - 1) + "&targetDate=" + targetDate + "&msg=" + msg);
+		}
+	}	
 }
