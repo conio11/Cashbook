@@ -15,33 +15,30 @@ import javax.servlet.http.HttpSession;
 
 import cashbook.model.CashbookDao;
 import cashbook.model.HashtagDao;
+import cashbook.service.CounterService;
 import cashbook.vo.Cashbook;
 import cashbook.vo.Member;
-
 
 @WebServlet("/on/calendar")
 public class CalendarController extends HttpServlet {
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		/*
-		// session 유효성 검사
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
+		// session 인증 검사 코드
 		HttpSession session = request.getSession();
+		
 		String msg = "";
-		if (session.getAttribute("loginMember") == null) {
-			msg = URLEncoder.encode("로그인 후 이용 가능합니다.", "UTF-8"); 
-			response.sendRedirect(request.getContextPath() + "/login?msg=" + msg);
+		Object loginInfo = session.getAttribute("loginInfo");
+		Member member = null;
+		String memberId = null;
+		if (loginInfo instanceof Member) {
+			member = (Member) loginInfo;
+			memberId = member.getMemberId();
+			System.out.println(memberId + " <-- memberId(CalendarGet)");
+		} else { // 관리자인 경우 관리자 메인 페이지로 이동
+			msg = URLEncoder.encode("접근할 수 없습니다.", "UTF-8"); 
+			response.sendRedirect(request.getContextPath() + "/on/cashbook?msg=" + msg);
 			return;
 		}
-		
-		
-		HttpSession session = request.getSession();
-		Member loginMember = (Member) session.getAttribute("loginMember");
-		String memberId = loginMember.getMemberId();
-		System.out.println(memberId + " <-- memberId(CalendarGet)");
-		
-		*/
-		
-		String loginMemberId = (String) request.getAttribute("loginMemberId");
 		
 		// view에 넘겨줄 달력 정보 (모델값)
 		// Calendar c = Calendar.getInstance(); // 오늘 날짜 정보
@@ -102,14 +99,25 @@ public class CalendarController extends HttpServlet {
 		
 		
 		// 모델 호출 (DAO 타겟 월의 수입/지출 데이터)
-		List<Cashbook> list = new CashbookDao().selectCashBookListByMonth(loginMemberId, targetYear, targetMonth + 1); // targetMonth: 0 ~ 11이므로 + 1
+		List<Cashbook> list = new CashbookDao().selectCashBookListByMonth(memberId, targetYear, targetMonth + 1); // targetMonth: 0 ~ 11이므로 + 1
+		
+		int expenses = new CashbookDao().selectMonthlyExpenses(memberId, targetYear, targetMonth + 1); // 월간 지출금액
+		int income = new CashbookDao().selectMonthlyIncome(memberId, targetYear, targetMonth + 1); // 월간 수입금액
+		
+		System.out.println(expenses + " <-- expenses(CalendarGet)");
+		System.out.println(income + " <-- income(CalendarGet)");
 		
 		// 해시태그 <이름, 개수> 쌍 리스트 가져오기
-		List<Map<String, Object>> htList = new HashtagDao().selectWordCntByMonth(loginMemberId, targetYear, targetMonth + 1);
+		List<Map<String, Object>> htList = new HashtagDao().selectWordCntByMonth(memberId, targetYear, targetMonth + 1);
 		System.out.println(htList.size() + " <-- htList.size()(calendarGet)");preDay.set(Calendar.MONTH, targetMonth - 1);
 		
 		// 달력을 출력하는 view
 		// view에 넘길 값들을 request 속성에 저장
+		request.setAttribute("loginId", memberId);
+		
+		request.setAttribute("expenses", expenses);
+		request.setAttribute("income", income);
+		
 		request.setAttribute("targetYear", targetYear);
 		request.setAttribute("targetMonth", targetMonth);
 		request.setAttribute("lastDate", lastDate);
@@ -122,6 +130,6 @@ public class CalendarController extends HttpServlet {
 		request.setAttribute("htList", htList);
 		
 		// view로 포워딩
-		request.getRequestDispatcher("/WEB-INF/view/calendar.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/view/member/calendar.jsp").forward(request, response);
 	}
 }
