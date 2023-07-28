@@ -88,8 +88,9 @@ public class ModifyMemberController extends HttpServlet {
 		if (row == 1) {
 			System.out.println("비밀번호 변경 성공");
 			// 페이지 이동
-			msg = URLEncoder.encode("비밀번호가 변경되었습니다.", "UTF-8"); 
-			response.sendRedirect(request.getContextPath() + "/on/memberOne?msg=" + msg);
+			msg = URLEncoder.encode("비밀번호가 변경되었습니다. 다시 로그인 후 이용 가능합니다.", "UTF-8"); 
+			session.invalidate(); // 로그아웃
+			response.sendRedirect(request.getContextPath() + "/off/login?msg=" + msg);
 		} else if (row == 0) {
 			System.out.println("비밀번호 변경 실패. 현재 비밀번호 확인");
 			msg = URLEncoder.encode("비밀번호 변경 실패. 현재 비밀번호를 확인해주세요.", "UTF-8"); 
