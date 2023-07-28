@@ -37,7 +37,7 @@ public class AddQuestionController extends HttpServlet {
 		
 		request.setAttribute("loginId", memberId);
 		
-		request.getRequestDispatcher("/WEB-INF/view/questionMember.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/view/member/questionMember.jsp").forward(request, response);
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -84,5 +84,4 @@ public class AddQuestionController extends HttpServlet {
 			response.sendRedirect(request.getContextPath() + "/onOff/questionList?msg=" + msg);
 		}
 	}
-
 }

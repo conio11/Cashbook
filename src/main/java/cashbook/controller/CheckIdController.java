@@ -45,5 +45,4 @@ public class CheckIdController extends HttpServlet {
 		out.flush(); // 출력 버퍼 비우기
 		out.close(); // 출력 스트림 닫기
 	}
-
 }
