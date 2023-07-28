@@ -80,13 +80,13 @@
 	                      <label for="loginId" class="form-label">ID</label>
 	                      <div class="input-group has-validation">
 	                       <!--  <span class="input-group-text" id="inputGroupPrepend">@</span> -->
-	                        <input type="text" name="loginId" class="form-control" id="loginId" value="${loginId}" required>
+	                        <input type="text" name="loginId" class="form-control" id="loginId" value="user" required>
 	                        <div class="invalid-feedback">ID를 입력하세요.</div>
 	                      </div>
 	                    </div>
 	                    <div class="col-12">
 	                      <label for="loginPw" class="form-label">Password</label>
-	                      <input type="password" name="loginPw" id="loginPw" class="form-control" required>
+	                      <input type="password" name="loginPw" id="loginPw" class="form-control" value="1234" required>
 	                      <div class="invalid-feedback">패스워드를 입력하세요.</div>
 	                    </div>
 	                    <div class="col-12">
