@@ -1,12 +1,45 @@
 package cashbook.model;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import cashbook.vo.Member;
 
 public class MemberDao {
+	// 회원정보(이름, 이메일) 수정 메소드
+	public int modifyMemberInfo(String id, String name, String email) {
+		int row = 0;
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "UPDATE member SET member_name = ?, member_email = ?, updatedate = NOW() WHERE member_id = ?";
+		
+		try {
+			Class.forName("org.mariadb.jdbc.Driver");
+			conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/cash", "root", "java1234");
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, name);
+			stmt.setString(2, email);
+			stmt.setString(3, id);
+			row = stmt.executeUpdate();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		} finally {
+			try {
+				stmt.close();
+				conn.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+		return row;
+	}
+	
+	
+	
 	// 회원정보(비밀번호) 수정 메소드
-	public int modifyMember(String id, String pw, String newPw) {
+	public int modifyMemberPw(String id, String pw, String newPw) {
 		int row = 0;
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -198,5 +231,81 @@ public class MemberDao {
 		}
 		
 		return returnMember;
+	}
+	
+	// 전체 회원 정보 조회
+	public List<Member> selectMemberAll(int beginRow, int rowPerPage) {
+		List<Member> list = new ArrayList<>();
+		
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT member_id memberId, member_pw memberPw, member_name memberName, member_email memberEmail, createdate, updatedate FROM member ORDER BY createdate DESC LIMIT ?, ?";
+
+		try {
+			Class.forName("org.mariadb.jdbc.Driver");
+			conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/cash", "root", "java1234");
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, beginRow);
+			stmt.setInt(2, rowPerPage);
+			
+			rs = stmt.executeQuery();
+		    while (rs.next()) {
+		    	Member member = new Member();
+		    	member.setMemberId(rs.getString("memberId"));
+		    	member.setMemberPw(rs.getString("memberPw"));
+		    	member.setMemberName(rs.getString("memberName"));
+		    	member.setMemberEmail(rs.getString("memberEmail"));
+		    	member.setCreatedate(rs.getString("createdate"));
+		    	member.setUpdatedate(rs.getString("updatedate"));
+		    	list.add(member);
+		    }
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+				stmt.close();
+				conn.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+		return list;
+	}
+	
+	// 전체 회원 수
+	public int selectMemberCnt() {
+		int row = 0;
+		
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT COUNT(*) FROM member";
+		
+		try {
+			Class.forName("org.mariadb.jdbc.Driver");
+			conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/cash", "root", "java1234");
+			stmt = conn.prepareStatement(sql);
+			
+			rs = stmt.executeQuery();
+			if (rs.next()) {
+				row = rs.getInt(1);
+			} 
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+				stmt.close();
+				conn.close();
+				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+		return row;
 	}
 }
