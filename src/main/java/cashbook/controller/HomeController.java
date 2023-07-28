@@ -9,10 +9,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import cashbook.service.CounterService;
+
 
 @WebServlet("/off/home")
 public class HomeController extends HttpServlet {
+	private CounterService counterService = null;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// 접속자 수
+		this.counterService = new CounterService();
+		int counter = counterService.getCounter();
+		int totalCounter = counterService.getCounterAll();	
+		
 		// view에 넘겨줄 달력 정보 (모델값)
 		
 		Calendar firstDay = Calendar.getInstance(); // 오늘 날짜
@@ -80,8 +88,9 @@ public class HomeController extends HttpServlet {
 		request.setAttribute("endBlank", endBlank);
 		request.setAttribute("preLastDate", preLastDate);
 		
+		request.setAttribute("counter", counter);
+		request.setAttribute("totalCounter", totalCounter);
 		
 		request.getRequestDispatcher("/WEB-INF/view/home.jsp").forward(request, response);
 	}
-
 }
