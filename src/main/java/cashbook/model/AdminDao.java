@@ -20,7 +20,7 @@ public class AdminDao {
 		try {
 			Class.forName("org.mariadb.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/cash", "root", "java1234");
-			String sql = "SELECT admin_id adminId FROM admin WHERE admin_id = ? AND admin_pw = PASSWORD(?)";
+			String sql = "SELECT admin_id adminId FROM admin WHERE admin_id = ? AND admin_pw = ?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, paramAdmin.getAdminId());
 			stmt.setString(2, paramAdmin.getAdminPw());
