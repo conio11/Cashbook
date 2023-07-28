@@ -62,7 +62,7 @@
 	            <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
 	
 	              <div class="d-flex justify-content-center py-4">
-	                <a href="index.html" class="logo d-flex align-items-center w-auto">
+	                <a href="${pageContext.request.contextPath}/off/home" class="logo d-flex align-items-center w-auto">
 	                  <img src="assets/img/logo.png" alt="">
 	                  <span class="d-none d-lg-block">Cashbook</span>
 	                </a>
@@ -80,13 +80,13 @@
 	                      <label for="loginId" class="form-label">ID</label>
 	                      <div class="input-group has-validation">
 	                       <!--  <span class="input-group-text" id="inputGroupPrepend">@</span> -->
-	                        <input type="text" name="loginId" class="form-control" id="loginId" value="user" required>
+	                        <input type="text" name="loginId" class="form-control" id="loginId" value="" required>
 	                        <div class="invalid-feedback">ID를 입력하세요.</div>
 	                      </div>
 	                    </div>
 	                    <div class="col-12">
 	                      <label for="loginPw" class="form-label">Password</label>
-	                      <input type="password" name="loginPw" id="loginPw" class="form-control" value="1234" required>
+	                      <input type="password" name="loginPw" id="loginPw" class="form-control" value="" required>
 	                      <div class="invalid-feedback">패스워드를 입력하세요.</div>
 	                    </div>
 	                    <div class="col-12">
