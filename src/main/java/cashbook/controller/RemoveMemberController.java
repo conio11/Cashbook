@@ -17,57 +17,62 @@ import cashbook.vo.Member;
 public class RemoveMemberController extends HttpServlet {
 	// 회원 탈퇴 폼으로 이동
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		/*
-		// session 유효성 검사
+		// session 인증 검사 코드
 		HttpSession session = request.getSession();
+		
 		String msg = "";
-		if (session.getAttribute("loginMember") == null) {
-			msg = URLEncoder.encode("로그인 후 이용 가능합니다.", "UTF-8"); 
-			response.sendRedirect(request.getContextPath() + "/login?msg=" + msg);
+		Object loginInfo = session.getAttribute("loginInfo");
+		Member member = null;
+		String memberId = null;
+		if (loginInfo instanceof Member) {
+			member = (Member) loginInfo;
+			memberId = member.getMemberId();
+			System.out.println(memberId + " <-- memberId(removeMemberGet)");
+		} else { // 관리자인 경우 관리자 메인 페이지로 이동
+			msg = URLEncoder.encode("접근할 수 없습니다.", "UTF-8"); 
+			response.sendRedirect(request.getContextPath() + "/on/cashbook?msg=" + msg);
 			return;
 		}
-		Member loginMember = (Member) session.getAttribute("loginMember");
-		String memberId = loginMember.getMemberId();
-		System.out.println(memberId + " <-- memberId(removeMemberGet)");
-		*/
 		
-		request.getRequestDispatcher("/WEB-INF/view/removeMember.jsp").forward(request, response);
+		request.setAttribute("loginId", memberId);
+		request.getRequestDispatcher("/WEB-INF/view/member/memberOne.jsp").forward(request, response);
 	}
 
 	// 탈퇴 액션
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		/*
-		// session 유효성 검사
+		// session 인증 검사 코드
 		HttpSession session = request.getSession();
+		
 		String msg = "";
-		if (session.getAttribute("loginMember") == null) {
-			msg = URLEncoder.encode("로그인 후 이용 가능합니다.", "UTF-8"); 
-			response.sendRedirect(request.getContextPath() + "/login?msg=" + msg);
+		Object loginInfo = session.getAttribute("loginInfo");
+		Member member = null;
+		String memberId = null;
+		if (loginInfo instanceof Member) {
+			member = (Member) loginInfo;
+			memberId = member.getMemberId();
+			System.out.println(memberId + " <-- memberId(removeMemberPost)");
+		} else { // 관리자인 경우 관리자 메인 페이지로 이동
+			msg = URLEncoder.encode("접근할 수 없습니다.", "UTF-8"); 
+			response.sendRedirect(request.getContextPath() + "/on/cashbook?msg=" + msg);
 			return;
 		}
-		*/
 		
-		// Member loginMember = (Member) session.getAttribute("loginMember");
-		// String memberId = loginMember.getMemberId();
+		// String memberId = (String) request.getAttribute("loginMemberId");
 		
-		String memberId = (String) request.getAttribute("loginMemberId");
-		
-		String memberPw = request.getParameter("memberPw");
+		String memberPw = request.getParameter("removeMemberPw");
 		System.out.println(memberId + " <-- memberId(removeMemberPost)");
 		System.out.println(memberPw + " <-- memberPw(removeMemberPost)");
-		
 		
 		// 모델값 구하기
 		MemberDao memberDao = new MemberDao();
 		
-		String msg = "";
+		// String msg = "";
 		int row = memberDao.deleteMember(memberId, memberPw);
 		System.out.println(row + " <-- row(RemoveMemberController)");
 		if (row == 1) { // 탈퇴 성공 -> 세션 삭제
 			System.out.println("회원 탈퇴 성공");
 			msg = URLEncoder.encode("회원 탈퇴가 완료되었습니다.", "UTF-8"); 
-			HttpSession session = request.getSession();
+			// HttpSession session = request.getSession();
 			session.invalidate();
 			
 			// 로그인 페이지로 이동
@@ -76,7 +81,7 @@ public class RemoveMemberController extends HttpServlet {
 		} else if (row == 0) { 
 			System.out.println("회원 탈퇴 실패");
 			msg = URLEncoder.encode("회원 탈퇴 실패. 정확한 비밀번호를 입력해주세요.", "UTF-8"); 
-			response.sendRedirect(request.getContextPath() + "/on/removeMember?msg=" + msg);
+			response.sendRedirect(request.getContextPath() + "/on/memberOne?msg=" + msg);
 		} else {
 			System.out.println("remove member error!");
 		}		

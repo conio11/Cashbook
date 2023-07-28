@@ -49,94 +49,90 @@
  		<jsp:include page="/WEB-INF/view/inc/adminSidebar.jsp"></jsp:include>
  		
  		<main id="main" class="main">
-	
-	    <div class="pagetitle">
-	      <h1>Data Tables</h1>
-	      <nav>
-	        <ol class="breadcrumb">
-	          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-	          <li class="breadcrumb-item">Tables</li>
-	          <li class="breadcrumb-item active">Data</li>
-	        </ol>
-	      </nav>
-	    </div><!-- End Page Title -->
-	
-	    <section class="section">
-	      <div class="row">
-	        <div class="col-lg-12">
-	
-	          <div class="card">
-	            <div class="card-body">
-	              <h5 class="card-title">Datatables</h5>
-	              <p>Add lightweight datatables to your project with using the <a href="https://github.com/fiduswriter/Simple-DataTables" target="_blank">Simple DataTables</a> library. Just add <code>.datatable</code> class name to any table you wish to conver to a datatable</p>
-	
-	              <!-- Table with stripped rows -->
-	              <table class="table datatable">
-	                <thead>
-	                  <tr>
-	                    <th scope="col">번호</th>
-	                    <th scope="col">제목</th>
-	                    <th scope="col">작성자</th>
-	                    <th scope="col">상태</th>
-	                    <th scope="col">작성일자</th>
-	                  </tr>
-	                </thead>
-	                <tbody>
-						<c:forEach var="q" items="${list}">
-						<tr>
-							<td>${q.qNo}</td>
-							<td><a href="${pageContext.request.contextPath}/on/questionOne?qNo=${q.qNo}&memberId=${q.memberId}">${q.qTitle}</a></td>
-							<td>${q.memberId}</td>
-							<td>${q.qStatus}</td>
-							<td>${q.createdate}</td>
-						</tr>
+		    <div class="pagetitle">
+		      <h1>Questions</h1>
+		      <nav>
+		        <ol class="breadcrumb">
+		          <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/on/cashbook">Home</a></li>
+		          <li class="breadcrumb-item">Pages</li>
+		          <li class="breadcrumb-item active">Questions</li>
+		        </ol>
+		      </nav>
+		    </div><!-- End Page Title -->
+		
+		    <section class="section">
+		      <div class="row">
+		        <div class="col-lg-12">
+		
+		          <div class="card">
+		            <div class="card-body">
+		              <h5 class="card-title">Questions</h5>
+		              <p></p>
+		
+		              <!-- Table with stripped rows -->
+		              <table class="table datatable">
+		                <thead>
+		                  <tr>
+		                    <th scope="col">번호</th>
+		                    <th scope="col">제목</th>
+		                    <th scope="col">작성자</th>
+		                    <th scope="col">상태</th>
+		                    <th scope="col">작성일자</th>
+		                  </tr>
+		                </thead>
+		                <tbody>
+							<c:forEach var="q" items="${list}">
+							<tr>
+								<td>${q.qNo}</td>
+								<td><a href="${pageContext.request.contextPath}/on/questionOne?qNo=${q.qNo}&memberId=${q.memberId}">${q.qTitle}</a></td>
+								<td>${q.memberId}</td>
+								<td>
+									<c:if test="${q.qStatus eq '답변대기'}">
+										<span style="color: red;">${q.qStatus}</span>
+									</c:if>
+									<c:if test="${q.qStatus ne '답변대기'}"> <!-- 답변대기가 아닐 경우  -->
+	      								  ${q.qStatus}
+	    							</c:if>
+								</td>
+								<td>${q.createdate}</td>
+							</tr>
+						</c:forEach>
+		                </tbody>
+		              </table>
+		              <br>
+		              <!-- End Table with stripped rows -->
+		              
+		        <ul class="pagination justify-content-center">
+			   		<!-- minPage가 1보다 클 때만 [이전] 탭 출력  -->
+					<c:if test="${minPage > 1}">
+						<li class="page-item"><a href="${pageContext.request.contextPath}/onOff/questionList?currentPage=${minPage - pagePerPage}" class="page-link">이전</a></li>
+					</c:if>
+					
+					<!-- [이전], [다음] 탭 내에서 반복 -->
+					<c:forEach var="i" begin="${minPage}" end="${maxPage}">
+						<c:choose>
+							<c:when test="${currentPage == i}"> <!-- 현재 페이지 번호는 링크 없이 표시 -->
+								<li class="page-item active"><a class="page-link"><span>${i}</span></a></li>
+							</c:when>
+							 <c:otherwise> <!-- 현재 페이지가 아닌 번호는 링크로 표시 (클릭 시 해당 번호 페이지로 이동) -->
+			      				   <li class="page-item"><a href="${pageContext.request.contextPath}/onOff/questionList?currentPage=${i}" class="page-link">${i}</a></li>
+			    			</c:otherwise>
+						</c:choose>
 					</c:forEach>
-	                </tbody>
-	              </table>
-	              <br>
-	              <!-- End Table with stripped rows -->
-	              
-	         <ul class="pagination justify-content-center">
-	   		<!-- minPage가 1보다 클 때만 [이전] 탭 출력  -->
-			<c:if test="${minPage > 1}">
-				<li class="page-item"><a href="${pageContext.request.contextPath}/onOff/questionList?currentPage=${minPage - pagePerPage}" class="page-link">이전</a></li>
-			</c:if>
-			
-			<!-- [이전], [다음] 탭 내에서 반복 -->
-			<c:forEach var="i" begin="${minPage}" end="${maxPage}">
-				<c:choose>
-					<c:when test="${currentPage == i}"> <!-- 현재 페이지 번호는 링크 없이 표시 -->
-						<li class="page-item active"><a class="page-link"><span>${i}</span></a></li>
-					</c:when>
-					 <c:otherwise> <!-- 현재 페이지가 아닌 번호는 링크로 표시 (클릭 시 해당 번호 페이지로 이동) -->
-	      				   <li class="page-item"><a href="${pageContext.request.contextPath}/onOff/questionList?currentPage=${i}" class="page-link">${i}</a></li>
-	    			</c:otherwise>
-				</c:choose>
-			</c:forEach>
-			
-			<!-- [이전] [다음] 탭 사이 가장 큰 숫자가 lastPage보다 작을 때만 [다음] 탭 출력  -->
-			<c:if test="${maxPage < lastPage}">
-				<li class="page-item"><a href="${pageContext.request.contextPath}/onOff/questionList?currentPage=${minPage + pagePerPage}" class="page-link">다음</a>
-			</c:if>
-			
-			</ul>
-			
-			<br>
-	
-	            </div>
-	          </div>
-	
-	        </div>
-	      </div>
-	    </section>
-	
-	  </main><!-- End #main -->
+					
+					<!-- [이전] [다음] 탭 사이 가장 큰 숫자가 lastPage보다 작을 때만 [다음] 탭 출력  -->
+					<c:if test="${maxPage < lastPage}">
+						<li class="page-item"><a href="${pageContext.request.contextPath}/onOff/questionList?currentPage=${minPage + pagePerPage}" class="page-link">다음</a>
+					</c:if>
+				</ul>
+		            </div>
+		          </div>
+		        </div>
+		      </div>
+		    </section>
+		    <a href="${pageContext.request.contextPath}/on/cashbook" class="btn btn-outline-primary">이전</a>
+	    </main><!-- End #main -->
 
-
-	
-	
-	
-	
 	  	<jsp:include page="/WEB-INF/view/inc/footer.jsp"></jsp:include> <!-- webapp 이후부터 경로 작성하기  -->
 		
 		<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>

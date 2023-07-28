@@ -11,27 +11,29 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import cashbook.model.CashbookDao;
+import cashbook.vo.Admin;
 import cashbook.vo.Member;
 
 @WebServlet("/on/removeCashbook")
 public class RemoveCashbookController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		/*
-		
-		// session 유효성 검사
+		// session 인증 검사 코드
 		HttpSession session = request.getSession();
+		
 		String msg = "";
-		if (session.getAttribute("loginMember") == null) {
-			msg = URLEncoder.encode("로그인 후 이용 가능합니다.", "UTF-8");
-			response.sendRedirect(request.getContextPath() + "/login?msg=" + msg);
+		Object loginInfo = session.getAttribute("loginInfo");
+		Member member = null;
+		String memberId = null;
+		if (loginInfo instanceof Member) {
+			member = (Member) loginInfo;
+			memberId = member.getMemberId();
+			System.out.println(memberId + " <-- memberId(RemoveCashbookGet)");
+		} else { // 관리자인 경우 관리자 메인 페이지로 이동
+			msg = URLEncoder.encode("접근할 수 없습니다.", "UTF-8"); 
+			response.sendRedirect(request.getContextPath() + "/on/cashbook?msg=" + msg);
 			return;
 		}
-		Member loginMember = (Member) session.getAttribute("loginMember");
-		String memberId = loginMember.getMemberId();
-		System.out.println(memberId + " <-- memberId(removeCashbookGet)");
-		*/
-		
 		
 		CashbookDao cashbookDao = new CashbookDao();
 		
@@ -49,7 +51,7 @@ public class RemoveCashbookController extends HttpServlet {
 		int row = cashbookDao.removeCashbook(cashbookNo);
 		System.out.println(row + " <-- row(RemoveCashbookPost)");
 		
-		String msg = "";
+		// String msg = "";
 		if (row == 1) {
 			System.out.println("가계부 삭제 성공");
 			msg = URLEncoder.encode("삭제되었습니다.", "UTF-8"); 
