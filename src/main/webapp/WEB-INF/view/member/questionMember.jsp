@@ -204,35 +204,37 @@
 	                 	   <div class="card-body">
 		              		   <h5 class="card-title">My Questions</h5>
 		              		   <p></p>
-	
-					  	   <!-- Table with stripped rows -->
-			                <table class="table datatable">
-			                  <thead>
-			                    <tr>
-			                      <th scope="col">번호</th>
-			                      <th scope="col">제목</th>
-			                      <th scope="col">상태</th>
-			                      <th scope="col">작성일자</th>
-			                    </tr>
-			                  </thead>
-			                  <tbody>
-								  <c:forEach var="q" items="${list}">
-								  <tr>
-									  <td>${q.qNo}</td>
-									  <td><a href="${pageContext.request.contextPath}/on/myQuestionOne?qNo=${q.qNo}">${q.qTitle}</a></td>
-									  <td>
-										  <c:if test="${q.qStatus eq '답변완료'}">
-											  <span style="color: blue;">${q.qStatus}</span>
-										  </c:if>
-										  <c:if test="${q.qStatus ne '답변완료'}"> <!-- 답변완료가 아닐 경우  -->
-	      									    ${q.qStatus}
-	    								  </c:if>
-									  </td>
-									  <td>${q.createdate}</td>
-								   </tr>
-							  </c:forEach>
-			                  </tbody>
-			                </table>
+							
+						  <div style="overflow:auto; height:450px;"> <!-- 스크롤 설정  -->
+						  	   <!-- Table with stripped rows -->
+				                <table class="table datatable">
+				                  <thead>
+				                    <tr>
+				                      <th scope="col">번호</th>
+				                      <th scope="col">제목</th>
+				                      <th scope="col">상태</th>
+				                      <th scope="col">작성일자</th>
+				                    </tr>
+				                  </thead>
+				                  <tbody>
+									  <c:forEach var="q" items="${list}">
+									  <tr>
+										  <td>${q.qNo}</td>
+										  <td><a href="${pageContext.request.contextPath}/on/myQuestionOne?qNo=${q.qNo}">${q.qTitle}</a></td>
+										  <td>
+											  <c:if test="${q.qStatus eq '답변완료'}">
+												  <span style="color: blue;">${q.qStatus}</span>
+											  </c:if>
+											  <c:if test="${q.qStatus ne '답변완료'}"> <!-- 답변완료가 아닐 경우  -->
+		      									    ${q.qStatus}
+		    								  </c:if>
+										  </td>
+										  <td>${q.createdate}</td>
+									   </tr>
+								  </c:forEach>
+				                  </tbody>
+				                </table>
+			                </div>
 			                <br>
 			                <!-- End Table with stripped rows -->
 		              
