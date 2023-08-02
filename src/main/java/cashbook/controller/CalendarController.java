@@ -109,7 +109,9 @@ public class CalendarController extends HttpServlet {
 		
 		// 해시태그 <이름, 개수> 쌍 리스트 가져오기
 		List<Map<String, Object>> htList = new HashtagDao().selectWordCntByMonth(memberId, targetYear, targetMonth + 1);
-		System.out.println(htList.size() + " <-- htList.size()(calendarGet)");preDay.set(Calendar.MONTH, targetMonth - 1);
+		System.out.println(htList.size() + " <-- htList.size()(calendarGet)");
+		
+		preDay.set(Calendar.MONTH, targetMonth - 1);
 		
 		// 달력을 출력하는 view
 		// view에 넘길 값들을 request 속성에 저장

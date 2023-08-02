@@ -70,7 +70,7 @@ public class HashtagDao {
 		return row;
 	}
 	
-	public List<Map<String, Object>> selectWordCntByMonth(String id, int targetYear, int targetMonth) {
+	public List<Map<String, Object>> selectWordCntByMonth(String memberId, int targetYear, int targetMonth) {
 		List<Map<String, Object>> list = new ArrayList<>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -81,7 +81,7 @@ public class HashtagDao {
 			Class.forName("org.mariadb.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/cash", "root", "java1234");
 			stmt = conn.prepareStatement(sql); 
-			stmt.setString(1, id);
+			stmt.setString(1, memberId);
 			stmt.setInt(2, targetYear);
 			stmt.setInt(3, targetMonth);
 			rs = stmt.executeQuery();
