@@ -20,21 +20,7 @@ import cashbook.vo.Member;
 public class HashtagOneController extends HttpServlet {
 	// 캘린더에서 해시태그를 선택했을 때 해당 해시태그의 내용, 날짜, 가격, 카테고리 가져오기
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		/*
-		// session 유효성 검사
-		HttpSession session = request.getSession();
-		String msg = "";
-		if (session.getAttribute("loginMember") == null) {
-			msg = URLEncoder.encode("로그인 후 이용 가능합니다.", "UTF-8"); 
-			response.sendRedirect(request.getContextPath() + "/login?msg=" + msg);
-			return;
-		}
-		Member loginMember = (Member) session.getAttribute("loginMember");
-		String memberId = loginMember.getMemberId();
-		System.out.println(memberId + " <-- memberId(HashtagOneGet)");
-		*/
-		
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 		// session 인증 검사 코드
 		HttpSession session = request.getSession();
 		
@@ -51,7 +37,6 @@ public class HashtagOneController extends HttpServlet {
 			response.sendRedirect(request.getContextPath() + "/on/cashbook?msg=" + msg);
 			return;
 		}
-		
 		
 		String word = request.getParameter("word");
 		System.out.println(word + " <-- word(HashtagOneGet)");
@@ -105,6 +90,31 @@ public class HashtagOneController extends HttpServlet {
 		
 		List<Map<String, Object>> list = hashtagDao.selectHashtagOne(memberId, word, beginRow, rowPerPage);
 		
+		// 해시태그 목록에서 이전 버튼 링크에 사용 -> 해시태그 목록의 가장 최근 날짜가 있는 연도, 월의 달력으로 이동
+		int targetYear = 0; 
+		int targetMonth = 0; 
+	
+		// list에서 첫 번째 Map 객체를 가져옴
+		Map<String, Object> firstItem = list.get(0);
+
+		// firstItem에서 cashbookDate 값을 가져옴
+		Object cashbookDateObj = firstItem.get("cashbookDate");
+
+		// String 타입으로 캐스팅하여 사용
+		String cashbookDate = (String) cashbookDateObj;
+		
+		System.out.println(cashbookDate + "<-- cashbookDate(HashtagOneGet)");
+		
+		targetYear = Integer.parseInt(cashbookDate.substring(0, 4));
+		if (cashbookDate.substring(5, 7).startsWith("0")) { // 1 ~ 9월일 경우
+			targetMonth = Integer.parseInt(cashbookDate.substring(6, 7));
+		} else { // 10 ~ 12월일 경우
+			targetMonth = Integer.parseInt(cashbookDate.substring(5, 7)); 
+		}
+
+		System.out.println(targetYear + " <-- targetYear(HashtagOneGet)");
+		System.out.println(targetMonth + " <-- targetMonth(HashtagOneGet)");
+		
 		request.setAttribute("loginId", memberId);
 		request.setAttribute("word", word);
 		request.setAttribute("list", list);
@@ -114,6 +124,9 @@ public class HashtagOneController extends HttpServlet {
 		request.setAttribute("pagePerPage", pagePerPage);
 		request.setAttribute("minPage", minPage);
 		request.setAttribute("maxPage", maxPage);
+		
+		request.setAttribute("targetYear", targetYear);
+		request.setAttribute("targetMonth", targetMonth);
 		
 		request.getRequestDispatcher("/WEB-INF/view/member/hashtagOne.jsp").forward(request, response);
 	}
