@@ -141,7 +141,7 @@
 		        </div>
 		      </div>
 		    </section>
-		    <a href="${pageContext.request.contextPath}/off/home" class="btn btn-outline-primary">이전</a>
+		    <a href="${pageContext.request.contextPath}/off/home" class="btn btn-outline-primary">홈으로</a>
 	  </main><!-- End #main -->
 	    	
   	  <jsp:include page="/WEB-INF/view/inc/footer.jsp"></jsp:include> <!-- webapp 이후부터 경로 작성하기  -->

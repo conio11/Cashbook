@@ -151,13 +151,13 @@
 	      
    	  	<c:choose>
 		  	<c:when test="${fn:startsWith(loginId, 'admin')}"> <!-- 관리자 홈  -->
-				<a href="${pageContext.request.contextPath}/on/cashbook" class="btn btn-outline-primary">이전</a>
+				<a href="${pageContext.request.contextPath}/on/cashbook" class="btn btn-outline-primary">홈으로</a>
 		  	</c:when>
 		  	<c:when test="${loginId eq null}"> <!-- 비로그인 홈 -->
-				<a href="${pageContext.request.contextPath}/off/home" class="btn btn-outline-primary">이전</a>
+				<a href="${pageContext.request.contextPath}/off/home" class="btn btn-outline-primary">홈으로</a>
 		  	</c:when>
 		  	<c:otherwise> <!-- 회원 홈 -->
-				<a href="${pageContext.request.contextPath}/on/calendar" class="btn btn-outline-primary">이전</a>
+				<a href="${pageContext.request.contextPath}/on/calendar" class="btn btn-outline-primary">홈으로</a>
 		  	</c:otherwise>
 	  </c:choose>
 	   

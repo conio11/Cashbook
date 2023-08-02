@@ -274,7 +274,7 @@
 		        </div>
 		  		</div>
 		    </section>
-		    <a href="${pageContext.request.contextPath}/on/calendar" class="btn btn-outline-primary">이전</a>
+		    <a href="${pageContext.request.contextPath}/on/calendar" class="btn btn-outline-primary">홈으로</a>
 	 	</main><!-- End #main -->
        	
 		  

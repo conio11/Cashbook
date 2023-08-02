@@ -246,7 +246,7 @@
       	    </div> <!-- <div class="card-body pt-3">  -->
       		</div> <!-- <div class="col-lg-12"> -->
 	  	</section>
-	  	<a href="${pageContext.request.contextPath}/on/calendar" class="btn btn-outline-primary">이전</a>
+	  	<a href="${pageContext.request.contextPath}/on/calendar" class="btn btn-outline-primary">홈으로</a>
 	  </main>
 
   	  <jsp:include page="/WEB-INF/view/inc/footer.jsp"></jsp:include> <!-- webapp 이후부터 경로 작성하기  -->
