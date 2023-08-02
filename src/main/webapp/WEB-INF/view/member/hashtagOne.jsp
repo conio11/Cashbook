@@ -76,7 +76,8 @@
 		
 		          <div class="card">
 		            <div class="card-body">
-		              <h5 class="card-title">Hashtags</h5>
+		              <!-- <h5 class="card-title">Hashtags</h5> -->
+		              <h5 class="card-title text-center">#${word} &nbsp; 해시태그 목록</h5>
 		              <p></p>
 		
 		              <!-- Table with stripped rows -->
@@ -93,8 +94,22 @@
 		           			<c:forEach var="h" items="${list}">
 								<tr class="text-center">
 									<td>${h.cashbookDate}</td>
-									<td>${h.category}</td>
-									<td>${h.price}</td>
+									<td>
+										<c:if test="${h.category eq '지출'}">
+											<span style="color: red;">${h.category}</span>
+										</c:if>
+										<c:if test="${h.category ne '지출'}">
+											${h.category}
+										</c:if>
+									</td>
+									<td>
+										<c:if test="${h.category eq '지출'}">
+											<span style="color: red;">${h.price}</span>
+										</c:if>
+									  	<c:if test="${h.category ne '지출'}"> <!-- 지출이 아닐 경우  -->
+								    		${h.price}
+    								  	</c:if>
+									</td>
 									<td>${h.memo}</td>
 								</tr>
 							</c:forEach>
@@ -130,7 +145,7 @@
 		        </div>
 		      </div>
 		    </section>
-		    <a href="${pageContext.request.contextPath}/on/calendar" class="btn btn-outline-primary">이전</a>
+		   	 <a href="${pageContext.request.contextPath}/on/calendar?targetYear=${targetYear}&targetMonth=${targetMonth - 1}" class="btn btn-outline-primary">이전</a>
 	    </main><!-- End #main -->
 
 		<jsp:include page="/WEB-INF/view/inc/footer.jsp"></jsp:include> <!-- webapp 이후부터 경로 작성하기  -->
