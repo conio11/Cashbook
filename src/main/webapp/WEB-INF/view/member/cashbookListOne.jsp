@@ -66,7 +66,7 @@
 		            <div class="card-body"><br>
 		              <h5 class="card-title text-center">${targetYear}년 ${targetMonth + 1}월 ${targetDate}일 가계부</h5>
 		              
-		              <p>수입: <fmt:formatNumber value="${income}" pattern="#,###"/>원 / 지출: <fmt:formatNumber value="${expenses}" pattern="#,###"/>원</p>
+		              <p>수입: <fmt:formatNumber value="${income}" pattern="#,###"/>원 <span style="color: red;">지출: <fmt:formatNumber value="${expenses}" pattern="#,###"/>원</span></p>
 		              <p>잔액: <fmt:formatNumber value="${income - expenses}" pattern="#,###"/>원</p>
 		              <!-- Table with stripped rows -->
 		              <table class="table table-bordered">
@@ -105,7 +105,7 @@
 		        </div>
 		      </div>
 		   </section>
-		   <a href="${pageContext.request.contextPath}/on/calendar" class="btn btn-outline-primary">이전</a>
+		   <a href="${pageContext.request.contextPath}/on/calendar?targetYear=${targetYear}&targetMonth=${targetMonth}" class="btn btn-outline-primary">이전</a>
 	    </main><!-- End #main -->
 		
 		<jsp:include page="/WEB-INF/view/inc/footer.jsp"></jsp:include> <!-- webapp 이후부터 경로 작성하기  -->
