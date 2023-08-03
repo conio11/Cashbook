@@ -193,7 +193,7 @@
 		                  </form><!-- End Profile Edit Form -->
 		                </div>
 		
-		                <div class="tab-pane fade pt-3" id="profile-change-password">
+		                <div class="tab-pane fade profile-edit pt-3" id="profile-change-password">
 		                  <!-- Change Password Form -->
 		                  <form method="post" action="${pageContext.request.contextPath}/on/modifyMember" id="modifyMember">
 		                    <div class="row mb-3">
@@ -255,7 +255,7 @@
 		                  </form><!-- End Change Password Form -->
 		                  </div>
 		                  
-	   	                 <div class="tab-pane fade pt-3" id="profile-remove">
+	   	                 <div class="tab-pane fade profile-edit pt-3" id="profile-remove">
 		                  <!-- Change Password Form -->
 		                  <form method="post" action="${pageContext.request.contextPath}/on/removeMember" id="removeMember">
 		                    <div class="row mb-3">
@@ -276,7 +276,6 @@
 		    </section>
 		    <a href="${pageContext.request.contextPath}/on/calendar" class="btn btn-outline-primary">홈으로</a>
 	 	</main><!-- End #main -->
-       	
 		  
 		<jsp:include page="/WEB-INF/view/inc/footer.jsp"></jsp:include> <!-- webapp 이후부터 경로 작성하기  -->
 	
