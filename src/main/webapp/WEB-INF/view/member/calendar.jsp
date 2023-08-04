@@ -189,10 +189,10 @@
 														<c:if test="${d == fn:substring(c.cashbookDate, 8, 10)}">
 															<div>
 																<c:if test="${c.category == '수입'}">
-																	<span>+${c.price}</span>  <!--c.getPrice() -->
+																	<span>+ <fmt:formatNumber value="${c.price}" pattern="#,###"/></span>  <!--c.getPrice() --> 
 																</c:if>
 																<c:if test="${c.category == '지출'}">
-																	<span style="color: red;">-${c.price}</span>
+																	<span style="color: red;">- <fmt:formatNumber value="${c.price}" pattern="#,###"/></span>
 																</c:if>
 															</div>
 														</c:if>
