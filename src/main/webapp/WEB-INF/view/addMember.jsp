@@ -46,6 +46,8 @@
 		 	    		success: function(response) {
 		 	    			if (response == "y") {
 		 	    				alert("사용 가능한 아이디입니다.");
+		 	    				$("#checkId").text("중복 확인 완료"); // 버튼의 이름을 바꿈
+		 	    		        $("#checkId").prop("disabled", true); // 버튼을 비활성화
 		 	    			} else {
 		 	    				alert("사용 중인 아이디입니다.");
 		 	  	    	  		$("#memberId").val("");
